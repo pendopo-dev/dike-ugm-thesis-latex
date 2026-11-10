@@ -1,32 +1,30 @@
 ## Description
-<!-- Describe your changes in detail. -->
+<!-- Describe the change and why it is needed. -->
 
-## Related Issue
-<!-- Link to the issue this PR addresses (if applicable). -->
-Fixes #(issue)
+## Related issue
+<!-- Link the issue this pull request addresses, if any. -->
+Fixes #
 
-## Type of Change
-<!-- What types of changes does your code introduce? -->
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] Template update (new pedoman, new academic year)
+## Type of change
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Breaking change
+- [ ] Pedoman or academic-year update
 - [ ] Documentation update
+- [ ] Build or CI change
 
 ## Checklist
-<!-- Please check all that apply: -->
-- [ ] I have read the [CONTRIBUTING.md](../CONTRIBUTING.md) guide
-- [ ] My changes compile successfully (`make proposal` and `make skripsi`)
-- [ ] I have updated the documentation (README.md, AGENTS.md) if needed
-- [ ] I have tested the changes locally
-- [ ] If updating `ugmskripsi.cls`, I have updated all copies:
-  - [ ] Root `ugmskripsi.cls`
-  - [ ] `template/proposal/ugmskripsi.cls`
-  - [ ] `template/skripsi/ugmskripsi.cls`
-- [ ] My commits follow conventional commit format
+- [ ] I read [CONTRIBUTING.md](https://github.com/pendopo-dev/dike-ugm-thesis-latex/blob/main/CONTRIBUTING.md).
+- [ ] I followed the [Code of Conduct](https://github.com/pendopo-dev/dike-ugm-thesis-latex/blob/main/CODE_OF_CONDUCT.md).
+- [ ] Both templates compile: `make proposal` and `make skripsi` (or the Docker equivalents).
+- [ ] `make check` passes.
+- [ ] I updated the documentation where behavior changed.
+- [ ] I did not commit generated build artifacts.
+- [ ] If I changed `ugmskripsi.cls`, I updated all three copies and ran `make check`.
+- [ ] My commits follow the Conventional Commits format.
 
 ## Testing
-<!-- Describe the tests you ran and how to reproduce them. -->
+<!-- Describe the commands you ran and the result. Include the relevant log output if the change affects compilation. -->
 
-## Screenshots (if applicable)
-<!-- Add screenshots to help explain your changes. -->
+## Screenshots
+<!-- For layout changes, add before/after screenshots or PDF pages. -->
