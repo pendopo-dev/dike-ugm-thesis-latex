@@ -1,165 +1,179 @@
-# AGENTS.md — Pedoman dan Referensi Penulisan Skripsi UGM
+# AGENTS.md — DIKE UGM Thesis Writing Reference
 
-> **Panduan resmi:** `@examples/pedoman_ta.pdf`  
-> **Contoh Proposal:** `@examples/contoh_proposal.pdf`  
-> **Contoh Skripsi:** `@examples/contoh_skripsi.pdf`
+> **Official guideline:** `@examples/pedoman_ta.pdf`
+> **Proposal example:** `@examples/contoh_proposal.pdf`
+> **Thesis example:** `@examples/contoh_skripsi.pdf`
 
----
-
-## Aturan Prioritas (WAJIB DIKUTI)
-
-1. **Pedoman (`pedoman_ta.pdf`) adalah prioritas UTAMA**
-2. Jika ada perbedaan antara pedoman dan contoh PDF, **ikuti pedoman**
-3. Contoh PDF hanya sebagai referensi format/visual, bukan aturan
+This file is for AI coding agents and maintainers. It describes the document structure and formatting rules used by this template.
 
 ---
 
-## Jenis TA: Skripsi Inovasi Produk
+## Priority rules
 
-Mahasiswa mengembangkan produk/aplikasi/prototipe berbasis teknologi. Dalam kasus ini: **GitOps deployment system untuk InvenioRDM pada Kubernetes**.
+1. **The pedoman (`pedoman_ta.pdf`) is the primary source of truth.**
+2. If the pedoman and an example PDF disagree, follow the pedoman.
+3. Example PDFs are visual and formatting references, not rules.
 
 ---
 
-## Struktur PROPOSAL (`proposal/`)
+## Thesis type and department
+
+This template targets the **Skripsi Inovasi Produk** track at the Department of Computer Science and Electronics (DIKE), Faculty of Mathematics and Natural Sciences, Universitas Gadjah Mada.
+
+Students develop a technology-based product, application, or prototype. Other departments and thesis tracks may require different front matter, chapter titles, and approval pages; check the relevant pedoman before reuse.
+
+---
+
+## Proposal structure (`template/proposal/`)
 
 > Class: `\documentclass[proposal,indonesia]{ugmskripsi}`
 
-### Bagian Awal
-| Elemen | Ada? | Keterangan |
-|--------|------|-----------|
-| Halaman Sampul | ✅ | "PROPOSAL TUGAS AKHIR" |
-| Halaman Pengesahan | ✅ | Wajib ada, muncul di Daftar Isi |
-| Daftar Isi | ✅ | Hanya Daftar Isi |
-| Intisari | ✅ | Bahasa Indonesia saja |
-| Abstract | ✅ | Contoh memiliki, pedoman tidak menyebut — ikuti contoh |
+### Front matter
 
-### Bagian Utama
-| Bab | Judul | Isi |
-|-----|-------|-----|
-| **Bab 1** | Pendahuluan | Latar Belakang, **Rumusan Masalah**, Batasan Masalah, Tujuan Penelitian, Manfaat Penelitian |
-| **Bab 2** | Penelitian Terkait | State of the art, literatur review |
-| **Bab 3** | Metode dan Rancangan Penelitian | Deskripsi umum, metodologi, bagan alir, perancangan sistem |
-| **Bab 4** | Jadwal Penelitian | Gantt Chart berbasis bulan |
+| Element | Included? | Notes |
+|---|---|---|
+| Cover page | Yes | "PROPOSAL TUGAS AKHIR" |
+| Approval page | Yes | Required; listed in the table of contents |
+| Table of contents | Yes | Only the table of contents |
+| Intisari | Yes | Indonesian only |
+| Abstract | Yes | The example includes it; the pedoman does not mention it, so follow the example |
 
-### Bagian Akhir
-| Elemen | Ada? |
-|--------|------|
-| Glosarium | ⚠️ Opsional — hanya jika ada jargon teknis yang membingungkan |
-| Daftar Pustaka | ✅ |
+### Main chapters
 
-### Yang TIDAK ADA di Proposal
-- ❌ Halaman Pernyataan (Declaration)
-- ❌ Motto
-- ❌ Persembahan (Acknowledgment)
-- ❌ Prakata (Preface)
-- ❌ Daftar Tabel
-- ❌ Daftar Gambar
-- ❌ Daftar Lambang/Simbol
-- ❌ Lampiran
+| Chapter | Title | Contents |
+|---|---|---|
+| **Chapter 1** | Pendahuluan | Background, **problem statement**, scope and limitations, research objectives, expected benefits |
+| **Chapter 2** | Penelitian Terkait | State of the art, literature review |
+| **Chapter 3** | Metode dan Rancangan Penelitian | Overview, methodology, flowchart, system design |
+| **Chapter 4** | Jadwal Penelitian | Month-based Gantt chart |
+
+### Back matter
+
+| Element | Included? |
+|---|---|
+| Glossary | Optional — only when technical jargon needs explanation |
+| Bibliography | Yes |
+
+### Not included in the proposal
+
+- Declaration page
+- Motto
+- Dedication
+- Preface
+- List of tables
+- List of figures
+- List of symbols
+- Appendices
 
 ---
 
-## Struktur SKRIPSI (`skripsi/`)
+## Thesis structure (`template/skripsi/`)
 
 > Class: `\documentclass[skripsi,indonesia]{ugmskripsi}`
 
-### Bagian Awal
-| Elemen | Ada? | Keterangan |
-|--------|------|-----------|
-| Halaman Sampul | ✅ | "SKRIPSI" |
-| Halaman Pengesahan | ✅ | Muncul di Daftar Isi |
-| Halaman Pernyataan | ✅ | Muncul di Daftar Isi |
-| Motto | ✅ | Muncul di Daftar Isi |
-| Persembahan | ✅ | Muncul di Daftar Isi |
-| Prakata | ✅ | Muncul di Daftar Isi |
-| Daftar Isi | ✅ | |
-| Daftar Tabel | ✅ | |
-| Daftar Gambar | ✅ | |
-| Daftar Simbol | ✅ | Via `\lambang` |
-| Intisari | ✅ | Bahasa Indonesia |
-| Abstract | ✅ | Bahasa Inggris |
+### Front matter
 
-### Bagian Utama (Inovasi Produk — Bab 3.2 Pedoman)
-| Bab | Judul | Isi |
-|-----|-------|-----|
-| **Bab 1** | Pendahuluan | Latar Belakang, **Perumusan Produk**, Batasan Produk, Tujuan, Manfaat |
-| **Bab 2** | Identifikasi Masalah dan Ide Inovatif | Identifikasi masalah nyata + pengembangan ide inovatif |
-| **Bab 3** | Kajian Ilmiah | Tinjauan pustaka + dasar ilmiah produk (metode, algoritma, teknologi) |
-| **Bab 4** | Perancangan Prototipe/Produk | Arsitektur, UI/UX, database, rancangan teknis |
-| **Bab 5** | Proses Pembuatan Produk | Implementasi, kode, integrasi komponen |
-| **Bab 6** | Pengujian dan Evaluasi Produk | Metode pengujian, skenario, hasil, evaluasi kinerja + **Kesimpulan dan Saran** |
+| Element | Included? | Notes |
+|---|---|---|
+| Cover page | Yes | "SKRIPSI" |
+| Approval page | Yes | Listed in the table of contents |
+| Declaration page | Yes | Listed in the table of contents |
+| Motto | Yes | Listed in the table of contents |
+| Dedication | Yes | Listed in the table of contents |
+| Preface | Yes | Listed in the table of contents |
+| Table of contents | Yes | |
+| List of tables | Yes | |
+| List of figures | Yes | |
+| List of symbols | Optional | Enable via `\lambang` and add `\nomenclature` entries |
+| Intisari | Yes | Indonesian |
+| Abstract | Yes | English |
 
-### Bagian Akhir
-| Elemen | Ada? |
-|--------|------|
-| Daftar Pustaka | ✅ |
-| Lampiran | ✅ | Kode, konfigurasi, data primer |
+### Main chapters (Inovasi Produk — Pedoman Chapter 3.2)
+
+| Chapter | Title | Contents |
+|---|---|---|
+| **Chapter 1** | Pendahuluan | Background, **product definition**, product scope, objectives, benefits |
+| **Chapter 2** | Identifikasi Masalah dan Ide Inovatif | Real-world problem identification and innovative idea development |
+| **Chapter 3** | Kajian Ilmiah | Literature review and scientific foundation for the product (methods, algorithms, technology) |
+| **Chapter 4** | Perancangan Prototipe/Produk | Architecture, UI/UX, database, technical design |
+| **Chapter 5** | Proses Pembuatan Produk | Implementation, code, component integration |
+| **Chapter 6** | Pengujian dan Evaluasi Produk | Test methods, scenarios, results, performance evaluation, **conclusions and recommendations** |
+
+### Back matter
+
+| Element | Included? |
+|---|---|
+| Bibliography | Yes |
+| Appendices | Yes | Code, configuration, primary data |
 
 ---
 
-## Perbedaan Kunci: Proposal vs Skripsi
+## Key differences: proposal vs thesis
 
-| Aspek | Proposal | Skripsi |
-|-------|----------|---------|
+| Aspect | Proposal | Thesis |
+|---|---|---|
 | Class option | `[proposal]` | `[skripsi]` |
 | Cover text | "PROPOSAL TUGAS AKHIR" | "SKRIPSI" |
-| Judul Bab 1 | Rumusan **Masalah** | **Perumusan Produk** |
-| Bab 2 | Penelitian Terkait | Identifikasi Masalah dan Ide Inovatif |
-| Bab 3 | Metode dan Rancangan | Kajian Ilmiah |
-| Bab 4 | Jadwal Penelitian | Perancangan Produk |
-| Bab 5 | ❌ Tidak ada | Proses Pembuatan Produk |
-| Bab 6 | ❌ Tidak ada | Pengujian dan Evaluasi Produk |
-| Preliminary pages | Minimal | Lengkap |
-| Lampiran | ❌ Tidak ada | ✅ Ada |
+| Chapter 1 title | Problem statement | Product definition |
+| Chapter 2 | Related work | Problem identification and innovative idea |
+| Chapter 3 | Method and research design | Scientific foundation |
+| Chapter 4 | Research schedule | Product design |
+| Chapter 5 | Not included | Product development |
+| Chapter 6 | Not included | Product testing and evaluation |
+| Front matter | Minimal | Complete |
+| Appendices | Not included | Included |
 
 ---
 
-## Panduan Penulisan Bahasa
+## Language guidance
 
-- Gunakan **bahasa Indonesia** (`[indonesia]`)
-- Bahasa Inggris hanya untuk: judul, abstract, istilah teknis
-- Istilah teknis boleh dalam bahasa Inggris dengan penjelasan Indonesia pada pertama kali disebut
-- Gunakan Glosarium untuk jargon yang membingungkan
-
----
-
-## Panduan Diagram dan Flowchart
-
-- **Bagan Alir Metodologi** (Bab 3 Proposal / Bab 3-4 Skripsi): Wajib ada, visualisasi tahapan
-- **Arsitektur Sistem** (Bab 3-4): Diagram komponen dan hubungannya
-- **ERD / Skema Database** (jika relevan): Diagram relasi entitas
-- **UI/UX Wireframe atau Mockup** (jika ada antarmuka): Rancangan tampilan
-- **Gantt Chart** (Bab 4 Proposal): Jadwal penelitian berbasis bulan
-- Semua diagram menggunakan environment `figure` dengan caption dan label
+- Use **Indonesian** (`[indonesia]`).
+- Use English only for the title, the English abstract, and technical terms.
+- Explain technical terms in Indonesian the first time they appear.
+- Use the glossary for jargon that may confuse readers.
 
 ---
 
-## Referensi Cepat LaTeX
+## Diagram and flowchart guidance
 
-### Citasi
+- **Methodology flowchart** (Proposal Chapter 3 / Thesis Chapters 3–4): required; visualize the research workflow.
+- **System architecture** (Chapters 3–4): component diagram and relationships.
+- **ERD / database schema** (when relevant): entity relationship diagram.
+- **UI/UX wireframe or mockup** (when there is an interface): screen design.
+- **Gantt chart** (Proposal Chapter 4): month-based research schedule.
+- Put every diagram in a `figure` environment with a caption and label.
+
+---
+
+## LaTeX quick reference
+
+### Citations
+
 ```latex
 \citep{key}   % (Author, Year)
 \citet{key}   % Author (Year)
 ```
 
-### Gambar
+### Figures
+
 ```latex
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{figures/nama-file}
-  \caption{Deskripsi gambar}
+  \includegraphics[width=0.8\textwidth]{figures/file-name}
+  \caption{Figure description}
   \label{fig:label}
 \end{figure}
 ```
 
-### Tabel
+### Tables
+
 ```latex
 \begin{table}[H]
   \centering
-  \caption{Judul tabel}
+  \caption{Table title}
   \begin{tabular}{|l|c|r|}
     \hline
-    Kolom 1 & Kolom 2 & Kolom 3 \\
+    Column 1 & Column 2 & Column 3 \\
     \hline
     Data & Data & Data \\
     \hline
@@ -168,30 +182,45 @@ Mahasiswa mengembangkan produk/aplikasi/prototipe berbasis teknologi. Dalam kasu
 \end{table}
 ```
 
-### Kode / Listing
+### Code listings
+
 ```latex
-\begin{lstlisting}[language=yaml, caption={Judul}]
-# kode di sini
+\begin{lstlisting}[language=yaml, caption={Listing title}]
+# code here
 \end{lstlisting}
 ```
 
 ---
 
-## Kompilasi
+## Compilation
+
+From the repository root:
 
 ```bash
-export PATH="/Library/TeX/texbin:$PATH"
-cd proposal/  # atau cd skripsi/
+make proposal
+make skripsi
+```
+
+Or compile a single document manually:
+
+```bash
+cd template/proposal   # or template/skripsi
 pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+```
+
+For the list of symbols and abbreviations, uncomment `\lambang`, add `\nomenclature` entries, and run:
+
+```bash
+make glossary-proposal   # or make glossary-skripsi
 ```
 
 ---
 
-## Catatan Penting
+## Important notes
 
-- Jangan lupa mengisi metadata (nama, NIM, dosen pembimbing, dosen penguji) di `main.tex`
-- Ganti `figures/logougm.pdf` dengan logo UGM resmi
-- Untuk proposal: fokus pada **perencanaan**, bukan hasil
-- Untuk skripsi: setiap bab harus terstruktur dan merujuk ke pedoman
-- Gunakan `\bibliography{references}` untuk daftar pustaka
-- Pastikan semua `\citep` / `\citet` ada di `references.bib`
+- Fill in the metadata (name, student ID, supervisors, examiners, and examination date) in `main.tex`.
+- Replace `figures/logougm.pdf` with the official UGM logo.
+- For the proposal, present the proposed research design and expected outcomes, not completed results.
+- For the thesis, keep every chapter structured and aligned with the pedoman.
+- Use `\bibliography{references}` for the bibliography.
+- Make sure every `\citep` and `\citet` key exists in `references.bib`.

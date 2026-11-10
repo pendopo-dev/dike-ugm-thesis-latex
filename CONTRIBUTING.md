@@ -1,122 +1,89 @@
-# Contributing to UGM Thesis LaTeX Template
+# Contributing to the DIKE UGM Thesis LaTeX Template
 
-Thank you for your interest in contributing! This guide covers how to use, fork, and contribute to this template.
+Thank you for helping improve the template. This guide covers the ways to report a problem, request a change, and submit a pull request.
 
----
+By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
-## Table of Contents
+## Ways to contribute
 
-1. [For Students: Using the Template](#for-students-using-the-template)
-2. [For Contributors: Submitting Changes](#for-contributors-submitting-changes)
-3. [Versioning](#versioning)
-4. [Code of Conduct](#code-of-conduct)
+- **Report a bug** in the class file, build system, or template structure.
+- **Request a feature** that makes the template easier to use.
+- **Report a pedoman update** when DIKE or UGM changes a requirement.
+- **Improve the documentation** in `README.md`, `CONTRIBUTING.md`, `AGENTS.md`, or `docs/`.
+- **Submit a code change** for the class file, Makefile, Docker image, or CI workflow.
 
----
+The thesis content in `template/` stays in Indonesian because the pedoman requires it. Repository documentation is written in English.
 
-## For Students: Using the Template
+## Before opening an issue
 
-### Quick Start
+1. Search the existing issues to avoid duplicates.
+2. Read the [README](README.md) and [build documentation](docs/build.md).
+3. Run `make clean` and rebuild before reporting a build failure.
+4. Confirm that you use a full TeX Live installation, not a minimal scheme.
 
-1. **Fork this repository** to your own GitHub account
-2. **Clone your fork** locally:
+## Opening an issue
+
+Use the issue form that matches your report:
+
+| Report | Form | Label |
+|---|---|---|
+| A build error, wrong page, or broken class behavior | [Bug report](https://github.com/pendopo-dev/dike-ugm-thesis-latex/issues/new?template=bug_report.md) | `bug` |
+| A new feature or usability improvement | [Feature request](https://github.com/pendopo-dev/dike-ugm-thesis-latex/issues/new?template=feature_request.md) | `enhancement` |
+| A change required by a new pedoman or academic year | [Template update](https://github.com/pendopo-dev/dike-ugm-thesis-latex/issues/new?template=template_update.md) | `template-update` |
+| A usage question | [Question](https://github.com/pendopo-dev/dike-ugm-thesis-latex/issues/new?template=question.md) | `question` |
+
+Include the template version, operating system, TeX distribution, the exact command you ran, and the relevant part of the log. Do not paste private data, unpublished thesis content, or credentials.
+
+## Development setup
+
+1. Fork the repository and clone your fork:
+
    ```bash
-   git clone https://github.com/YOUR_USERNAME/ugm-thesis-latex.git
-   cd ugm-thesis-latex
+   git clone https://github.com/YOUR_USERNAME/dike-ugm-thesis-latex.git
+   cd dike-ugm-thesis-latex
    ```
-3. **Customize the template**:
-   - Edit `template/proposal/main.tex` and `template/skripsi/main.tex`
-   - Replace all `{{PLACEHOLDER}}` with your actual data
-   - Write your content in the chapter files under `template/*/chapters/`
-4. **Compile**:
+
+2. Install one of the supported toolchains:
+
+   - TeX Live 2025 or later with `pdflatex`, `bibtex`, and `makeindex`.
+   - Docker Desktop for the container-based build.
+
+3. Build both templates:
+
    ```bash
-   make proposal    # or make proposal-docker
-   make skripsi     # or make skripsi-docker
+   make all
    ```
 
-### What to Change
+   Or use Docker:
 
-#### Metadata (`main.tex`)
-Replace these placeholders:
-```latex
-\titleind{{{JUDUL_BAHASA_INDONESIA}}}
-\titleeng{{{JUDUL_BAHASA_INGGRIS}}}
-\fullname{{{NAMA_LENGKAP}}}
-\idnum{{{NIM}}}
-\degree{{{JENJANG}}}
-\gelar{{{GELAR}}}
-\yearsubmit{{{TAHUN}}}
-\program{{{PROGRAM_STUDI}}}
-\dept{{{DEPARTEMEN}}}
-\firstsupervisor{{{NAMA_DOSEN_PEMBIMBING}}}
-\firstexaminer{{{NAMA_DOSEN_PENGUJI_1}}}
-\secondexaminer{{{NAMA_DOSEN_PENGUJI_2}}}
+   ```bash
+   make all-docker
+   ```
+
+4. Validate the class copies:
+
+   ```bash
+   make check
+   ```
+
+## Making changes
+
+### Branch names
+
+Use a short, descriptive branch name:
+
+```text
+fix/proposal-page-numbering
+docs/build-troubleshooting
+feat/second-supervisor
+ci/tag-release
 ```
 
-#### Content (`chapters/*.tex`)
-- Replace all `TODO` comments with your actual content
-- Replace lorem ipsum with your writing
-- Add your references to `references.bib`
-- Add your figures to `figures/`
+### Commit messages
 
-#### Logo
-Replace `template/*/figures/logougm.pdf` with the official UGM logo from your department.
+Use [Conventional Commits](https://www.conventionalcommits.org/):
 
-### What NOT to Change
-- `ugmskripsi.cls` — unless you know what you're doing
-- `.github/` — unless contributing back upstream
-
----
-
-## For Contributors: Submitting Changes
-
-### Reporting Bugs
-
-Before reporting a bug:
-1. Check if the issue already exists
-2. Try compiling with `make clean` first
-3. Ensure you have the required LaTeX packages
-
-When reporting, include:
-- Your OS and LaTeX distribution
-- The exact error message
-- Steps to reproduce
-
-### Requesting Template Updates
-
-When UGM releases a new pedoman or changes requirements:
-1. Open a **Template Update** issue
-2. Attach the new pedoman PDF or relevant documentation
-3. Describe exactly what changed
-4. Propose a solution if you have one
-
-### Submitting Pull Requests
-
-1. **Fork** the repository
-2. **Create a feature branch**: `git checkout -b feat/your-feature`
-3. **Make your changes**
-4. **Test compilation**:
-   ```bash
-   make proposal-docker
-   make skripsi-docker
-   ```
-5. **Update documentation** if needed (README.md, AGENTS.md)
-6. **Commit** with conventional commit messages:
-   ```bash
-   git commit -m "fix(cls): correct page numbering in proposal mode"
-   ```
-7. **Push** and open a Pull Request
-
-#### PR Checklist
-- [ ] Both `proposal` and `skripsi` compile successfully
-- [ ] All 3 copies of `ugmskripsi.cls` are updated (root, template/proposal, template/skripsi)
-- [ ] Documentation updated if needed
-- [ ] Conventional commit format used
-
-### Commit Message Format
-
-We use [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
+```text
 <type>(<scope>): <description>
 
 [optional body]
@@ -124,68 +91,95 @@ We use [Conventional Commits](https://www.conventionalcommits.org/):
 [optional footer]
 ```
 
-**Types:**
-- `feat`: New feature
-- `fix`: Bug fix
-- `docs`: Documentation changes
-- `style`: Formatting (no code change)
-- `refactor`: Code refactoring
-- `chore`: Maintenance tasks
-- `ci`: CI/CD changes
+Common types:
 
-**Scopes:**
-- `cls`: Class file (`ugmskripsi.cls`)
-- `proposal`: Proposal template
-- `skripsi`: Skripsi template
-- `build`: Makefile, Docker
-- `docs`: README, AGENTS, CONTRIBUTING
+- `feat`: new behavior
+- `fix`: bug fix
+- `docs`: documentation
+- `style`: formatting only
+- `refactor`: internal restructuring
+- `ci`: workflow changes
+- `chore`: maintenance
 
----
+Common scopes:
 
-## Versioning
+- `cls`: `ugmskripsi.cls`
+- `proposal`: proposal template
+- `skripsi`: thesis template
+- `build`: Makefile or Docker
+- `docs`: repository documentation
 
-We use git tags for versioning based on academic years:
+### Class file changes
 
-```bash
-# Tag format: vYYYY.N
-# YYYY = Academic year start
-# N    = Revision number within that year
+`ugmskripsi.cls` is the canonical class file. The copies at `template/proposal/ugmskripsi.cls` and `template/skripsi/ugmskripsi.cls` must stay identical.
 
-git tag -a v2025.1 -m "Template for academic year 2024/2025"
-git tag -a v2025.2 -m "Updated with pedoman fixes"
-git tag -a v2026.1 -m "Template for academic year 2025/2026"
-```
-
-### Version Table
-
-| Version | Academic Year | Notes |
-|---------|--------------|-------|
-| v2025.1 | 2024/2025 | Initial release |
-| v2026.1 | 2025/2026 | Updated pedoman |
-
-### Using Specific Versions
+After editing the class:
 
 ```bash
-# Clone specific version
-git clone --branch v2026.1 https://github.com/vityasyyy/ugm-thesis-latex.git
-
-# Or checkout after clone
-git checkout v2026.1
+cp ugmskripsi.cls template/proposal/ugmskripsi.cls
+cp ugmskripsi.cls template/skripsi/ugmskripsi.cls
+make check
 ```
 
----
+### Documentation changes
 
-## Code of Conduct
+Update the relevant document when behavior changes:
 
-- Be respectful and constructive
-- Help others learn
-- Give credit where due
-- Follow UGM academic integrity guidelines
+- `README.md` for user-facing setup and usage.
+- `CONTRIBUTING.md` for contribution rules.
+- `AGENTS.md` for document-structure guidance.
+- `docs/build.md` for build commands and troubleshooting.
+- `docs/releasing.md` for the release procedure.
 
----
+### Build artifacts
 
-## Questions?
+Do not commit generated files such as `.aux`, `.log`, `.toc`, `.bbl`, `.blg`, `.fls`, `.synctex.gz`, or `.DS_Store`. Run `make clean` before committing.
 
-Open an issue with the **Question** label or contact the maintainers.
+The `template/*/main.pdf` files are tracked previews. Rebuild them only when the placeholder content changes, and mention that in the pull request.
 
-Happy writing! 🎓
+## Pull requests
+
+1. Create a branch from `main`.
+2. Make the smallest change that solves the problem.
+3. Build both templates and run `make check`.
+4. Update the documentation if needed.
+5. Open a pull request and complete the template checklist.
+6. Wait for the GitHub Actions checks to pass.
+7. Address review comments and keep the branch up to date.
+
+A maintainer will review the pull request. Do not merge your own pull request unless you are a maintainer and the change has been reviewed.
+
+## Review criteria
+
+A pull request is ready when:
+
+- Both `make proposal` and `make skripsi` succeed.
+- `make check` passes.
+- The GitHub Actions workflow is green.
+- The change follows the pedoman or fixes a verified defect.
+- Documentation is updated.
+- No build artifacts, credentials, or private thesis content are included.
+
+## Release procedure
+
+Releases use tags in the `vYYYY.N` format. The tag triggers the compile workflow, which builds both PDFs and attaches them to the GitHub release.
+
+See [docs/releasing.md](docs/releasing.md) for the checklist and rollback steps.
+
+## Labels
+
+| Label | Meaning |
+|---|---|
+| `bug` | A confirmed defect |
+| `enhancement` | A new feature or improvement |
+| `template-update` | A change required by a new pedoman or academic year |
+| `documentation` | Documentation-only work |
+| `question` | A usage question |
+| `good first issue` | A small, well-scoped task for a new contributor |
+| `help wanted` | A task where maintainers welcome assistance |
+
+## Questions and security
+
+For usage questions, open a [question issue](https://github.com/pendopo-dev/dike-ugm-thesis-latex/issues/new?template=question.md).
+
+For a sensitive report, contact the maintainers through their GitHub profiles instead of posting private information in a public issue.

@@ -4,20 +4,30 @@ about: Suggest a new feature or improvement for the template
 title: '[FEATURE] '
 labels: enhancement
 assignees: ''
-
 ---
 
-## Feature Description
-<!-- A clear and concise description of what you want to happen. -->
+## Feature description
+<!-- A clear and concise description of the feature you want. -->
 
-## Problem / Motivation
-<!-- Is your feature request related to a problem? Please describe. -->
+## Problem or motivation
+<!-- What problem does this feature solve? Who benefits from it? -->
 
-## Proposed Solution
-<!-- Describe the solution you'd like. -->
+## Proposed solution
+<!-- Describe the solution you would like to see. -->
 
-## Alternatives
-<!-- Describe any alternative solutions or features you've considered. -->
+## Alternatives considered
+<!-- Describe any alternative solutions or workarounds you have considered. -->
 
-## Additional Context
-<!-- Add any other context or screenshots about the feature request here. -->
+## Affected area
+- [ ] `ugmskripsi.cls`
+- [ ] Proposal template
+- [ ] Thesis template
+- [ ] Build system (Makefile / Docker)
+- [ ] CI workflow
+- [ ] Documentation
+
+## Does this affect the pedoman structure?
+<!-- If the change affects required pages, chapter order, or formatting, cite the relevant pedoman section. -->
+
+## Additional context
+<!-- Add examples, screenshots, or references here. -->

@@ -1,43 +1,41 @@
 ---
 name: Template Update
-about: Report changes in UGM pedoman or template for new academic year
+about: Report a change in the DIKE/UGM pedoman or a new academic year requirement
 title: '[UPDATE] '
 labels: template-update
 assignees: ''
-
 ---
 
-## Academic Year
-<!-- Which academic year is this update for? -->
-[e.g. 2025/2026]
+## Academic year
+<!-- Which academic year does this update apply to? -->
+[e.g. 2026/2027]
 
-## Type of Update
-<!-- What kind of update is this? -->
+## Type of update
 - [ ] New pedoman released
 - [ ] Cover page format changed
-- [ ] New document class options
-- [ ] New required pages/sections
+- [ ] New document class option
+- [ ] New required page or section
+- [ ] Citation or bibliography style changed
 - [ ] Other: ___________
 
-## Source of Change
-<!-- Where did you find this information? -->
-- [ ] Official UGM pedoman PDF
+## Source of change
+- [ ] Official DIKE/UGM pedoman PDF
 - [ ] Department announcement
-- [ ] Advisor instruction
+- [ ] Supervisor instruction
 - [ ] Other: ___________
 
-## Description of Changes
-<!-- Describe what needs to be updated. -->
+## Description of changes
+<!-- Describe exactly what changed. Cite the page or section of the pedoman when possible. -->
 
-## Impact
-<!-- Which parts of the template are affected? -->
+## Affected files
 - [ ] `ugmskripsi.cls`
-- [ ] Proposal structure
-- [ ] Skripsi structure
-- [ ] Both
+- [ ] Proposal template
+- [ ] Thesis template
+- [ ] Both templates
+- [ ] Build system or CI
 
-## Proposed Solution
-<!-- If you have a suggestion for how to implement this update, describe it here. -->
+## Proposed solution
+<!-- If you have a suggestion for the implementation, describe it here. -->
 
-## Additional Context
-<!-- Add any other context or screenshots about the update here. -->
+## Additional context
+<!-- Attach the new pedoman, screenshots, or other references. Do not attach private documents. -->

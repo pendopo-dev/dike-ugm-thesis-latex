@@ -1,0 +1,13 @@
+# Third-party notices
+
+## `ugmskripsi.cls`
+
+`ugmskripsi.cls` is based on the UGM thesis class created by Pekik Nurwantoro at Universitas Gadjah Mada. The original header and attribution are retained in the file.
+
+The MIT License in `LICENSE` applies to the original contents of this repository. It does not override any rights or terms attached to third-party files.
+
+## UGM documents and marks
+
+The UGM logo, the pedoman, and the example documents in `examples/` are the property of Universitas Gadjah Mada. They are included for reference and are not covered by the MIT License.
+
+This repository is not affiliated with or endorsed by Universitas Gadjah Mada.
