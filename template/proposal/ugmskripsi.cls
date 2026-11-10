@@ -1,6 +1,6 @@
 \NeedsTeXFormat{LaTeX2e}
 %Created by Pekik Nurwantoro, Universitas Gadjah Mada, Yogyakarta, Indonesia
-\ProvidesClass{ugmskripsi}[2010/16/01 v2.0 The University of Gadjah Mada Skripsi Class]
+\ProvidesClass{ugmskripsi}[2010/01/16 v2.0 The University of Gadjah Mada Skripsi Class]
 
 \RequirePackage[english,bahasa]{babel}
 \RequirePackage{indentfirst}
@@ -209,6 +209,8 @@
 \newcommand{\@dept}{}
 \newcommand{\firstsupervisor}[1]{\gdef\@firstsupervisor{#1}}
 \newcommand{\@firstsupervisor}{}
+\newcommand{\secondsupervisor}[1]{\gdef\@secondsupervisor{#1}}
+\newcommand{\@secondsupervisor}{}
 \newcommand{\firstexaminer}[1]{\gdef\@firstexaminer{#1}}%
 \newcommand{\@firstexaminer}{}
 \newcommand{\secondexaminer}[1]{\gdef\@secondexaminer{#1}}%
@@ -285,7 +287,7 @@
        \vspace{1.5cm}
        {\normalfont 
          \MakeUppercase{\normalfont\bfseries Program Studi \@program}\\
-         \MakeUppercase{\normalfont\bfseries Depertemen \@dept}\\
+         \MakeUppercase{\normalfont\bfseries Departemen \@dept}\\
          \MakeUppercase{\normalfont\bfseries\@faculty}\\
          \MakeUppercase{\normalfont\bfseries\@university}\\
          \MakeUppercase{\normalfont\bfseries\@city}\\
@@ -325,6 +327,7 @@ pada tanggal \expandafter{\@examdate}\\
 \vspace{0.5cm}
 Susunan Tim Penguji\\
 
+\ifx\@secondsupervisor\@empty
 \vspace{4.0cm}
 \begin{tabular}{p{7cm}p{7cm}}
 \@firstsupervisor&\@firstexaminer\\
@@ -337,6 +340,15 @@ Pembimbing & Ketua Penguji
 &\@secondexaminer\\
 &Anggota Penguji
 \end{tabular}
+\else
+\vspace{3.0cm}
+\begin{tabular}{p{7cm}p{7cm}}
+\@firstsupervisor&\@firstexaminer\\
+Pembimbing I & Ketua Penguji\\[2.5cm]
+\@secondsupervisor&\@secondexaminer\\
+Pembimbing II & Anggota Penguji
+\end{tabular}
+\fi
     \end{singlespace}
     \end{center}
 }
