@@ -427,6 +427,7 @@ dalam naskah ini dan disebutkan dalam daftar pustaka.
 %------------------------------------------------------------
 \def\abstractind{%
   \clearpage
+  \selectlanguage{indonesian}
   \phantomsection
   \addcontentsline{toc}{chapter}{\abstractname}
   \thispagestyle{chapterheading}%
@@ -448,7 +449,8 @@ dalam naskah ini dan disebutkan dalam daftar pustaka.
   \begin{singlespace}%
   \vskip 20\p@
 }
-\def\endabstractind{\par\vfil\null\end{singlespace}}
+\def\endabstractind{\par\vfil\null\end{singlespace}%
+\if@langindo\selectlanguage{indonesian}\else\selectlanguage{english}\fi}
 
 %------------------------------------------------------------
 %Redefine Abstract in English
@@ -478,7 +480,8 @@ dalam naskah ini dan disebutkan dalam daftar pustaka.
   \vskip 20\p@
   }
 \def\endabstracteng{\par\vfil\null\end{singlespace}%
-\selectlanguage{indonesian}\clearpage\pagenumbering{arabic}\setcounter{page}{1}}
+\if@langindo\selectlanguage{indonesian}\else\selectlanguage{english}\fi
+\clearpage\pagenumbering{arabic}\setcounter{page}{1}}
 
 
 \AtBeginDocument{%

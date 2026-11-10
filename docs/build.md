@@ -137,7 +137,7 @@ Build the templates and run the regression tests:
 make test
 ```
 
-The test suite requires `pdftotext` from Poppler. Logo-size assertions also use Python's `pypdf` package when it is installed; otherwise that assertion is skipped. The CI workflow runs the class-file check alongside the compile jobs.
+The test suite requires `python3` and `pdftotext` from Poppler. The logo-size assertion additionally requires Python's optional `pypdf` package; without it the run reports that check as skipped rather than passed. The CI workflow runs the class-file check alongside the compile jobs.
 
 ## Troubleshooting
 

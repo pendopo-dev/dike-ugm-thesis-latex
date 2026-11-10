@@ -72,12 +72,58 @@ def check_text(pdf, needle):
         fail(f"{needle!r} is missing from the PDF")
 
 
+def normalized_text(pdf):
+    try:
+        raw = subprocess.check_output(
+            ["pdftotext", "-raw", pdf, "-"], text=True, stderr=subprocess.STDOUT
+        )
+    except FileNotFoundError:
+        fail("pdftotext is required for PDF assertions")
+    raw = re.sub(r"-\s*\n\s*", "", raw)
+    return re.sub(r"\s+", " ", raw)
+
+
+def check_text_normalized(pdf, needle):
+    if needle not in normalized_text(pdf):
+        fail(f"{needle!r} is missing from the normalized PDF text")
+
+
+def check_language(pdf, language):
+    if language == "id":
+        headings = ("INTISARI", "ABSTRACT", "DAFTAR ISI", "DAFTAR TABEL", "DAFTAR GAMBAR")
+        labels = ("BAB I", "Gambar 1.1", "Tabel 6.1")
+    else:
+        headings = ("INTISARI", "ABSTRACT", "CONTENTS", "LIST OF TABLES", "LIST OF FIGURES")
+        labels = ("CHAPTER I", "Figure 1.1", "Table 6.1")
+
+    pages_list = pages(pdf)
+    for heading in headings:
+        if not standalone(pages_list, heading):
+            fail(f"{language}: {heading!r} heading is missing from the PDF")
+    text = "\n".join(pages_list)
+    for label in labels:
+        if label in ("BAB I", "CHAPTER I"):
+            if not standalone(pages_list, label):
+                fail(f"{language}: {label!r} chapter label is missing from the PDF")
+        elif label not in text:
+            fail(f"{language}: {label!r} label is missing from the PDF")
+
+
+def check_metadata(pdf):
+    for needle in (
+        "NAMA MAHASISWA YANG SANGAT PANJANG SEKALI",
+        "Nama Dosen Pembimbing Kedua Dengan Gelar Panjang",
+        "Pembimbing II",
+    ):
+        check_text_normalized(pdf, needle)
+
+
 def check_logo(pdf):
     try:
         from pypdf import PdfReader
     except ImportError:
         print("  SKIP: pypdf is not installed; logo size not asserted")
-        return
+        raise SystemExit(77)
 
     reader = PdfReader(pdf)
     expected_points = 5.5 / 2.54 * 72
@@ -120,7 +166,10 @@ def check_logo(pdf):
 
 def main():
     if len(sys.argv) != 3:
-        sys.exit("usage: check_pdf.py <nomenclature|toc-lists|logo|text> <pdf>")
+        sys.exit(
+            "usage: check_pdf.py "
+            "<nomenclature|toc-lists|language-id|language-en|metadata|logo> <pdf>"
+        )
     command, pdf = sys.argv[1], sys.argv[2]
 
     if command == "nomenclature":
@@ -129,6 +178,12 @@ def main():
     elif command == "toc-lists":
         check_toc_entry(pdf, "DAFTAR TABEL")
         check_toc_entry(pdf, "DAFTAR GAMBAR")
+    elif command == "language-id":
+        check_language(pdf, "id")
+    elif command == "language-en":
+        check_language(pdf, "en")
+    elif command == "metadata":
+        check_metadata(pdf)
     elif command == "logo":
         check_logo(pdf)
     else:

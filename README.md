@@ -58,7 +58,7 @@ Fork the repository only when you want to improve the template itself. Read [CON
 - **TeX Live 2025 or later** (tested with TeX Live 2026) with `pdflatex`, `bibtex`, and `makeindex`.
 - **Docker Desktop** if you prefer not to install TeX Live.
 - **Overleaf** if you prefer a browser-based editor.
-- **`pdftotext`** (Poppler) only when running `make test`.
+- **`python3` and `pdftotext`** (Poppler) only when running `make test`; the logo assertion additionally uses `pypdf` when installed and is reported as skipped when absent.
 
 ## Build
 
@@ -135,7 +135,7 @@ See [docs/build.md](docs/build.md) for the full build matrix and troubleshooting
 | `natbib` or `babel` package missing | Install the full TeX Live distribution, not a minimal scheme. |
 | The PDF does not update | Run `make clean`, then rebuild. |
 | Docker target fails | Start Docker Desktop and confirm that `docker info` succeeds. |
-| Daftar Lambang is empty | Enable `\lambang`, add `\nomenclature{...}{...}` entries, then run `make skripsi` (the build runs `makeindex` automatically). |
+| Daftar Lambang is empty | Enable `\lambang`, add `\nomenclature{...}{...}` entries, then run `make proposal` or `make skripsi` as appropriate (the build runs `makeindex` automatically). |
 | Overfull hbox warnings | Adjust the surrounding text, table, or figure width. These warnings do not stop the build. |
 
 ## Contributing

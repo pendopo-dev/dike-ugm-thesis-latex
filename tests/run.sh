@@ -10,6 +10,9 @@ else
     trap 'rm -rf "$WORK"' EXIT
 fi
 failures=0
+skips=0
+passed=0
+DEFAULT_PDF=""
 
 for command in pdflatex bibtex makeindex pdftotext python3 make; do
     if ! command -v "$command" >/dev/null 2>&1; then
@@ -19,6 +22,7 @@ for command in pdflatex bibtex makeindex pdftotext python3 make; do
 done
 
 pass() {
+    passed=$((passed + 1))
     echo "  PASS: $1"
 }
 
@@ -30,19 +34,26 @@ fail() {
 run_test() {
     local name=$1
     shift
+    local status
     echo "== $name"
     if "$@"; then
         pass "$name"
     else
-        echo "  FAIL: $name" >&2
-        failures=$((failures + 1))
+        status=$?
+        if (( status == 77 )); then
+            echo "  SKIP: $name (optional dependency missing)" >&2
+            skips=$((skips + 1))
+        else
+            echo "  FAIL: $name" >&2
+            failures=$((failures + 1))
+        fi
     fi
 }
 
 copy_repo() {
     local destination=$1
     mkdir -p "$destination"
-    (cd "$ROOT" && tar \
+    if ! (cd "$ROOT" && tar \
         --exclude=.git \
         --exclude=WORKER-REPORT.md \
         --exclude='*.aux' \
@@ -59,13 +70,20 @@ copy_repo() {
         --exclude='*.blg' \
         --exclude='template/proposal/main.pdf' \
         --exclude='template/skripsi/main.pdf' \
-        -cf - .) | (cd "$destination" && tar -xf -)
+        -cf - .) | (cd "$destination" && tar -xf -); then
+        fail "could not copy the repository to $destination"
+        return 1
+    fi
 }
 
 build() {
     local repo=$1
     local target=$2
     local log=$3
+    if [[ -e "$repo/template/$target/main.aux" || -e "$repo/template/$target/main.pdf" ]]; then
+        fail "build for $target did not start from a clean directory"
+        return 1
+    fi
     if ! (cd "$repo" && make "$target") >"$log" 2>&1; then
         echo "  make $target failed; last lines of $log:" >&2
         tail -n 30 "$log" | sed 's/^/    /' >&2
@@ -87,6 +105,11 @@ check_log() {
     if grep -q 'Overfull \\hbox' "$log"; then
         echo "  overfull boxes in $log:" >&2
         grep -A1 'Overfull \\hbox' "$log" | head -20 | sed 's/^/    /' >&2
+        return 1
+    fi
+    if grep -q 'Overfull \\vbox' "$log"; then
+        echo "  vertical overfull boxes in $log:" >&2
+        grep -A1 'Overfull \\vbox' "$log" | head -20 | sed 's/^/    /' >&2
         return 1
     fi
 }
@@ -182,6 +205,38 @@ open(path, "w", encoding="utf-8").write(text)
 PY
 }
 
+inject_english_option() {
+    python3 - "$1" <<'PY'
+import sys
+
+path = sys.argv[1]
+text = open(path, encoding="utf-8").read()
+old = r"\documentclass[skripsi,indonesia]{ugmskripsi}"
+if old not in text:
+    raise SystemExit("documentclass marker not found")
+text = text.replace(old, r"\documentclass[skripsi,inggris]{ugmskripsi}", 1)
+open(path, "w", encoding="utf-8").write(text)
+PY
+}
+
+inject_figure() {
+    python3 - "$1" <<'PY'
+import sys
+
+path = sys.argv[1]
+text = open(path, encoding="utf-8").read()
+text += r"""
+\begin{figure}[H]
+  \centering
+  \rule{1cm}{1cm}
+  \caption{Test figure}
+  \label{fig:test}
+\end{figure}
+"""
+open(path, "w", encoding="utf-8").write(text)
+PY
+}
+
 test_class_copies() {
     (cd "$ROOT" && make check)
 }
@@ -192,10 +247,20 @@ test_default_builds() {
     copy_repo "$repo" || return 1
     build "$repo" proposal "$repo/proposal.log" || return 1
     check_log "$repo/proposal.log" || return 1
+    inject_figure "$repo/template/skripsi/chapters/bab1-pendahuluan.tex" || return 1
     build "$repo" skripsi "$repo/skripsi.log" || return 1
     check_log "$repo/skripsi.log" || return 1
-    python3 "$ROOT/tests/check_pdf.py" toc-lists "$repo/template/skripsi/main.pdf" || return 1
-    python3 "$ROOT/tests/check_pdf.py" logo "$repo/template/skripsi/main.pdf" || return 1
+    DEFAULT_PDF="$repo/template/skripsi/main.pdf"
+    python3 "$ROOT/tests/check_pdf.py" toc-lists "$DEFAULT_PDF" || return 1
+    python3 "$ROOT/tests/check_pdf.py" language-id "$DEFAULT_PDF"
+}
+
+test_logo_size() {
+    if [[ ! -f "$DEFAULT_PDF" ]]; then
+        fail "default thesis PDF is not available for the logo check"
+        return 1
+    fi
+    python3 "$ROOT/tests/check_pdf.py" logo "$DEFAULT_PDF"
 }
 
 test_thesis_nomenclature() {
@@ -224,43 +289,37 @@ test_long_metadata_and_two_supervisors() {
     copy_repo "$repo" || return 1
     inject_long_metadata "$repo/template/skripsi/main.tex" || return 1
     build "$repo" skripsi "$repo/skripsi.log" || return 1
-    check_log "$repo/skripsi.log"
+    check_log "$repo/skripsi.log" || return 1
+    python3 "$ROOT/tests/check_pdf.py" metadata "$repo/template/skripsi/main.pdf"
 }
 
 test_english_option() {
     local repo
     repo=$(mktemp -d "$WORK/english.XXXXXX") || return 1
     copy_repo "$repo" || return 1
-    python3 - "$repo/template/skripsi/main.tex" <<'PY'
-import sys
-
-path = sys.argv[1]
-text = open(path, encoding="utf-8").read()
-old = r"\documentclass[skripsi,indonesia]{ugmskripsi}"
-if old not in text:
-    raise SystemExit("documentclass marker not found")
-text = text.replace(old, r"\documentclass[skripsi,inggris]{ugmskripsi}", 1)
-open(path, "w", encoding="utf-8").write(text)
-PY
+    inject_figure "$repo/template/skripsi/chapters/bab1-pendahuluan.tex" || return 1
+    inject_english_option "$repo/template/skripsi/main.tex" || return 1
     build "$repo" skripsi "$repo/skripsi.log" || return 1
     check_log "$repo/skripsi.log" || return 1
-    pdftotext -layout "$repo/template/skripsi/main.pdf" - | tr -d '\f' \
-        | sed 's/^[[:space:]]*//' | grep -x 'CONTENTS' >/dev/null \
-        || { head -1 "$repo/template/skripsi/main.tex" >&2; \
-             pdftotext -layout "$repo/template/skripsi/main.pdf" - \
-                 | grep -n 'CONTENTS\|DAFTAR ISI' | head >&2; \
-             fail "English option did not produce CONTENTS"; }
+    python3 "$ROOT/tests/check_pdf.py" language-en "$repo/template/skripsi/main.pdf"
 }
 
 run_test "class file copies match" test_class_copies
 run_test "default proposal and thesis builds" test_default_builds
+run_test "logo size" test_logo_size
 run_test "thesis with nonempty nomenclature" test_thesis_nomenclature
 run_test "proposal with nonempty nomenclature" test_proposal_nomenclature
 run_test "long titles, long names, and two supervisors" test_long_metadata_and_two_supervisors
 run_test "English language option" test_english_option
 
 if (( failures > 0 )); then
-    echo "$failures test(s) failed" >&2
+    echo "$passed passed, $skips skipped, $failures failed" >&2
     exit 1
 fi
-echo "all tests passed"
+if (( skips > 0 )); then
+    echo "$passed passed, $skips skipped"
+    echo "all runnable tests passed; optional checks skipped"
+else
+    echo "$passed passed"
+    echo "all tests passed"
+fi
