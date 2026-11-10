@@ -133,9 +133,7 @@ Update the relevant document when behavior changes:
 
 ### Build artifacts
 
-Do not commit generated files such as `.aux`, `.log`, `.toc`, `.bbl`, `.blg`, `.fls`, `.synctex.gz`, or `.DS_Store`. Run `make clean` before committing.
-
-The `template/*/main.pdf` files are tracked previews. Rebuild them only when the placeholder content changes, and mention that in the pull request.
+Do not commit generated files such as `main.pdf`, `.aux`, `.log`, `.toc`, `.bbl`, `.blg`, `.fls`, `.synctex.gz`, or `.DS_Store`. Run `make clean` before committing. The template PDFs are ignored by Git and should be rebuilt locally with `make`.
 
 ## Pull requests
 
