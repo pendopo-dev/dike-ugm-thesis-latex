@@ -1,7 +1,7 @@
 # DIKE UGM Thesis LaTeX Template - Makefile
 # Supports local compilation with TeX Live and container-based compilation with Docker.
 
-.PHONY: help proposal skripsi clean glossary-proposal glossary-skripsi check-cls check \
+.PHONY: help proposal skripsi clean glossary-proposal glossary-skripsi check-cls check test \
 	build-docker proposal-docker skripsi-docker shell all all-docker
 
 # Default target
@@ -21,6 +21,7 @@ help:
 	@echo ""
 	@echo "Validation:"
 	@echo "  make check             - Verify that the three class-file copies match"
+	@echo "  make test              - Build the templates and run the regression tests"
 	@echo ""
 	@echo "Docker compilation (no TeX Live installation required):"
 	@echo "  make proposal-docker   - Compile the proposal in a container"
@@ -33,6 +34,7 @@ proposal:
 	cd template/proposal && \
 		pdflatex -interaction=nonstopmode main.tex && \
 		bibtex main && \
+		makeindex main.nlo -s nomencl.ist -o main.nls && \
 		pdflatex -interaction=nonstopmode main.tex && \
 		pdflatex -interaction=nonstopmode main.tex
 
@@ -40,19 +42,20 @@ skripsi:
 	cd template/skripsi && \
 		pdflatex -interaction=nonstopmode main.tex && \
 		bibtex main && \
+		makeindex main.nlo -s nomencl.ist -o main.nls && \
 		pdflatex -interaction=nonstopmode main.tex && \
 		pdflatex -interaction=nonstopmode main.tex
 
-# Nomenclature indexes
+# Nomenclature indexes (normally produced automatically by the build targets)
 glossary-proposal:
 	@cd template/proposal && \
-		test -f main.glo || { echo "error: main.glo not found; run make proposal first."; exit 1; } && \
-		makeindex main.glo -s nomencl.ist -o main.gls
+		test -f main.nlo || { echo "error: main.nlo not found; run make proposal first."; exit 1; } && \
+		makeindex main.nlo -s nomencl.ist -o main.nls
 
 glossary-skripsi:
 	@cd template/skripsi && \
-		test -f main.glo || { echo "error: main.glo not found; run make skripsi first."; exit 1; } && \
-		makeindex main.glo -s nomencl.ist -o main.gls
+		test -f main.nlo || { echo "error: main.nlo not found; run make skripsi first."; exit 1; } && \
+		makeindex main.nlo -s nomencl.ist -o main.nls
 
 # Validation
 check-cls:
@@ -64,6 +67,9 @@ check-cls:
 
 check: check-cls
 
+test:
+	./tests/run.sh
+
 clean:
 	@find template -type f \( \
 		-name "*.aux" -o -name "*.log" -o -name "*.out" -o -name "*.toc" \
@@ -71,6 +77,7 @@ clean:
 		-o -name "*.synctex.gz" -o -name "*.bbl" -o -name "*.blg" -o -name "*.glo" \
 		-o -name "*.gls" -o -name "*.glg" -o -name "*.idx" -o -name "*.ind" \
 		-o -name "*.ilg" -o -name "*.ist" -o -name "*.loa" \
+		-o -name "*.nlo" -o -name "*.nls" \
 	\) -delete
 
 # Docker compilation
@@ -82,11 +89,11 @@ build-docker:
 
 proposal-docker: build-docker
 	docker run --rm -v $(PWD)/template:/workspace $(DOCKER_IMAGE):$(DOCKER_TAG) \
-		sh -c "cd /workspace/proposal && pdflatex -interaction=nonstopmode main.tex && bibtex main && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex"
+		sh -c "cd /workspace/proposal && pdflatex -interaction=nonstopmode main.tex && bibtex main && makeindex main.nlo -s nomencl.ist -o main.nls && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex"
 
 skripsi-docker: build-docker
 	docker run --rm -v $(PWD)/template:/workspace $(DOCKER_IMAGE):$(DOCKER_TAG) \
-		sh -c "cd /workspace/skripsi && pdflatex -interaction=nonstopmode main.tex && bibtex main && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex"
+		sh -c "cd /workspace/skripsi && pdflatex -interaction=nonstopmode main.tex && bibtex main && makeindex main.nlo -s nomencl.ist -o main.nls && pdflatex -interaction=nonstopmode main.tex && pdflatex -interaction=nonstopmode main.tex"
 
 shell: build-docker
 	docker run --rm -it -v $(PWD)/template:/workspace $(DOCKER_IMAGE):$(DOCKER_TAG) sh
