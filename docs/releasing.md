@@ -72,6 +72,6 @@ If a release is incorrect:
 ## Maintainer notes
 
 - Do not move or reuse a published tag. Create a new revision instead.
-- Keep the tag and the `README.md` version in sync.
+- Keep the tag as the single version source; the README badge and links derive from it.
 - The CI workflow grants write permission only to the release job; the compile jobs run with read-only access.
 - The release job waits for the class-file check and both PDF jobs, so a drifted class file blocks the release.

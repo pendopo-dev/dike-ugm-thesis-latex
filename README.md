@@ -151,8 +151,10 @@ By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 Tags use the `vYYYY.N` format, where `YYYY` is the academic year in which the template version was released and `N` is the revision number. The latest tag is listed on the [tags page](https://github.com/pendopo-dev/dike-ugm-thesis-latex/tags).
 
 ```bash
-git clone --branch v2026.1 https://github.com/pendopo-dev/dike-ugm-thesis-latex.git
+git clone --branch <tag> https://github.com/pendopo-dev/dike-ugm-thesis-latex.git
 ```
+
+Replace `<tag>` with a tag from the tags page, for example `v2026.1`.
 
 See [docs/releasing.md](docs/releasing.md) for the release procedure.
 
