@@ -1,16 +1,12 @@
-# UGM Thesis LaTeX - Docker Image
-# Lightweight texlive for compilation
+# DIKE UGM Thesis LaTeX - Docker Image
+# TeX Live image for compiling the proposal and thesis templates.
 
 FROM texlive/texlive:latest
 
-LABEL maintainer="UGM Thesis Template"
-LABEL description="Docker image for compiling UGM thesis LaTeX documents"
+LABEL maintainer="Pendopo Dev"
+LABEL description="TeX Live image for the DIKE UGM thesis LaTeX template"
 
-# Set working directory
 WORKDIR /workspace
 
-# The base image already includes texlive-full
-# We just need to ensure it's ready to use
-
-# Default command
+# The base image includes the TeX Live packages required by ugmskripsi.cls.
 CMD ["sh"]
