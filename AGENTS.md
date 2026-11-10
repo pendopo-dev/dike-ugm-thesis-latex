@@ -84,7 +84,7 @@ Students develop a technology-based product, application, or prototype. Other de
 | Table of contents | Yes | |
 | List of tables | Yes | |
 | List of figures | Yes | |
-| List of symbols | Yes | Via `\lambang` |
+| List of symbols | Optional | Enable via `\lambang` and add `\nomenclature` entries |
 | Intisari | Yes | Indonesian |
 | Abstract | Yes | English |
 

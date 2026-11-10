@@ -19,7 +19,7 @@ Fixes #
 - [ ] Both templates compile: `make proposal` and `make skripsi` (or the Docker equivalents).
 - [ ] `make check` passes.
 - [ ] I updated the documentation where behavior changed.
-- [ ] I did not commit generated build artifacts.
+- [ ] I did not commit generated build artifacts other than the tracked preview PDFs.
 - [ ] If I changed `ugmskripsi.cls`, I updated all three copies and ran `make check`.
 - [ ] My commits follow the Conventional Commits format.
 

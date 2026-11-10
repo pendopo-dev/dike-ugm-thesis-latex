@@ -11,7 +11,7 @@ Tags use the `vYYYY.N` format:
 
 Examples: `v2026.1`, `v2026.2`, `v2027.1`.
 
-The current release is `v2026.1`.
+The latest tag is listed on the [tags page](https://github.com/pendopo-dev/dike-ugm-thesis-latex/tags).
 
 ## Before tagging
 
@@ -23,8 +23,8 @@ The current release is `v2026.1`.
    make check
    ```
 
-2. Confirm that the GitHub Actions workflow is green on `main`.
-3. Update the version badge and the current-release line in `README.md`.
+2. Confirm that the GitHub Actions workflow is green on the commit you are about to tag.
+3. Confirm that the tag follows the `vYYYY.N` format.
 4. Review `docs/build.md` and `docs/releasing.md` for commands that changed.
 5. Confirm that no build artifacts or private files are staged:
 

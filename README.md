@@ -2,7 +2,7 @@
 
 [![Compile LaTeX](https://github.com/pendopo-dev/dike-ugm-thesis-latex/actions/workflows/compile-latex.yml/badge.svg)](https://github.com/pendopo-dev/dike-ugm-thesis-latex/actions/workflows/compile-latex.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-v2026.1-blue.svg)](https://github.com/pendopo-dev/dike-ugm-thesis-latex/tags)
+[![Version](https://img.shields.io/github/v/tag/pendopo-dev/dike-ugm-thesis-latex?label=version)](https://github.com/pendopo-dev/dike-ugm-thesis-latex/tags)
 
 A LaTeX template for the **Proposal Tugas Akhir** and **Skripsi** at the Department of Computer Science and Electronics (DIKE), Faculty of Mathematics and Natural Sciences, Universitas Gadjah Mada (UGM).
 
@@ -148,7 +148,7 @@ By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Version
 
-The current release is **v2026.1**. Tags use the `vYYYY.N` format, where `YYYY` is the academic year in which the template version was released and `N` is the revision number.
+Tags use the `vYYYY.N` format, where `YYYY` is the academic year in which the template version was released and `N` is the revision number. The latest tag is listed on the [tags page](https://github.com/pendopo-dev/dike-ugm-thesis-latex/tags).
 
 ```bash
 git clone --branch v2026.1 https://github.com/pendopo-dev/dike-ugm-thesis-latex.git

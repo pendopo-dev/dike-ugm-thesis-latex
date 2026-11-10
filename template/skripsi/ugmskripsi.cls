@@ -327,6 +327,7 @@ pada tanggal \expandafter{\@examdate}\\
 \vspace{0.5cm}
 Susunan Tim Penguji\\
 
+% The single-supervisor branch preserves the original spacing.
 \ifx\@secondsupervisor\@empty
 \vspace{4.0cm}
 \begin{tabular}{p{7cm}p{7cm}}
