@@ -22,7 +22,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Compare class file copies
         run: make check-cls
@@ -33,13 +33,13 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Compile proposal with Docker
         run: make proposal-docker
 
       - name: Upload proposal PDF
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: proposal-pdf
           path: template/proposal/main.pdf
@@ -51,13 +51,13 @@ jobs:
     timeout-minutes: 30
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Compile thesis with Docker
         run: make skripsi-docker
 
       - name: Upload thesis PDF
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: skripsi-pdf
           path: template/skripsi/main.pdf
@@ -74,13 +74,13 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Download proposal PDF
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: proposal-pdf
           path: ./pdfs/proposal
 
       - name: Download thesis PDF
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: skripsi-pdf
           path: ./pdfs/skripsi
@@ -91,7 +91,7 @@ jobs:
           mv ./pdfs/skripsi/main.pdf ./pdfs/skripsi/thesis.pdf
 
       - name: Attach PDFs to release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             ./pdfs/proposal/proposal.pdf

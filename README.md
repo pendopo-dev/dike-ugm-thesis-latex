@@ -70,6 +70,8 @@ make all               # Build both documents
 make clean             # Remove LaTeX build artifacts
 ```
 
+Generated `main.pdf` files are ignored by Git. Rebuild them with `make` whenever you need a local copy.
+
 ### Docker
 
 ```bash
@@ -107,8 +109,6 @@ See [docs/build.md](docs/build.md) for the full build matrix and troubleshooting
 | `docker/Dockerfile` | Reproducible TeX Live build environment |
 | `docs/` | Build and release reference documentation |
 | `Makefile` | Local, Docker, and validation commands |
-
-The `main.pdf` files in each template are previews of the current placeholder content: [proposal preview](template/proposal/main.pdf) and [thesis preview](template/skripsi/main.pdf).
 
 ## Customization
 

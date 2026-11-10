@@ -122,7 +122,7 @@ Remove generated LaTeX files:
 make clean
 ```
 
-This removes auxiliary files created by `pdflatex`, `bibtex`, and `makeindex`. It does not remove the tracked preview PDFs.
+This removes auxiliary files created by `pdflatex`, `bibtex`, and `makeindex`. It does not remove the generated `main.pdf` files.
 
 ## Validation
 

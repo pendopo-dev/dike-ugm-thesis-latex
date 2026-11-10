@@ -17,7 +17,11 @@
 **/*.ist
 **/*.loa
 
-# Generated PDFs (uncomment to ignore)
+# Generated template output
+/template/proposal/main.pdf
+/template/skripsi/main.pdf
+
+# Generated PDFs (uncomment to ignore all PDFs)
 # **/*.pdf
 
 # OS & Editor files
