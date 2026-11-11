@@ -27,7 +27,7 @@ The generated files are:
 - `template/proposal/main.pdf`
 - `template/skripsi/main.pdf`
 
-The Makefile runs `pdflatex`, `bibtex`, and two additional `pdflatex` passes so that citations and cross-references resolve.
+The Makefile runs `pdflatex`, `bibtex`, `makeindex`, and two additional `pdflatex` passes so that citations, the nomenclature index, and cross-references resolve.
 
 ### Install TeX Live
 
@@ -69,7 +69,7 @@ make shell
 4. Select **pdfLaTeX** as the compiler and **BibTeX** as the bibliography tool.
 5. Compile.
 
-Overleaf may not run `makeindex` automatically. If you enable `\lambang`, run the glossary target locally first or configure Overleaf to run `makeindex` for the nomenclature file.
+Overleaf may not run `makeindex` automatically. If you enable `\lambang`, configure Overleaf to run `makeindex main.nlo -s nomencl.ist -o main.nls` after the first compile, or run `make glossary-skripsi` locally.
 
 ## VimTeX
 
@@ -95,22 +95,21 @@ The `\lambang` command is disabled by default in `template/skripsi/main.tex`. To
    ```
 
 2. Uncomment `\lambang` in `template/skripsi/main.tex`.
-3. Build the glossary index:
-
-   ```bash
-   make glossary-skripsi
-   ```
-
-4. Rebuild the document:
+3. Rebuild the document:
 
    ```bash
    make skripsi
    ```
 
+The build runs `makeindex` automatically. If you prefer to regenerate only the nomenclature index, run:
+
+```bash
+make glossary-skripsi
+```
+
 The proposal template does not enable `\lambang` by default. If your department requires a list of symbols there, add `\lambang` to `template/proposal/main.tex`, add the entries, and run:
 
 ```bash
-make glossary-proposal
 make proposal
 ```
 
@@ -132,7 +131,13 @@ Check that the three class-file copies are identical:
 make check
 ```
 
-The CI workflow runs the same check alongside the compile jobs.
+Build the templates and run the regression tests:
+
+```bash
+make test
+```
+
+The test suite requires `python3` and `pdftotext` from Poppler. The logo-size assertion additionally requires Python's optional `pypdf` package; without it the run reports that check as skipped rather than passed. The CI workflow runs the class-file check alongside the compile jobs.
 
 ## Troubleshooting
 
@@ -141,15 +146,15 @@ The CI workflow runs the same check alongside the compile jobs.
 | `logougm` not found | The logo file is missing or renamed | Replace `template/*/figures/logougm.pdf` with the official UGM logo |
 | Citations show `[?]` | BibTeX has not run, or the citation key is missing | Run `make clean && make proposal`; check `references.bib` |
 | `natbib.sty` not found | Incomplete TeX Live installation | Install the full TeX Live distribution |
-| `babel` package warning about `bahasa` | The class uses a legacy babel language name | The warning is harmless; the document still compiles |
 | PDF does not change after an edit | Stale auxiliary files | Run `make clean`, then rebuild |
 | Docker target fails | Docker Desktop is not running | Start Docker Desktop and confirm `docker info` succeeds |
-| Daftar Lambang is empty | `\lambang` is disabled or `makeindex` has not run | Follow the list-of-symbols procedure above |
+| Daftar Lambang is empty | `\lambang` is disabled or the `makeindex` step did not run | Enable `\lambang`, confirm that `main.nlo` contains entries, and run `make skripsi` |
 | Overfull hbox warnings | A line, table, or figure is wider than the text block | Adjust the content; warnings do not stop the build |
 
 ## Notes
 
 - The template uses `pdflatex`, not XeLaTeX or LuaLaTeX. If you switch engines, check `inputenc`, `fontenc`, and the `times` package first.
 - The class file is shared by both templates. Edit the canonical `ugmskripsi.cls` at the repository root, copy it to both template directories, and run `make check`.
+- The class renders the UGM logo at the pedoman's 5.5 cm diameter.
 - The Dockerfile uses `texlive/texlive:latest`. Pin a specific TeX Live image tag if you need a fully reproducible build.
 - The `examples/` directory contains official reference documents. Do not edit those PDFs.

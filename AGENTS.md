@@ -205,14 +205,12 @@ Or compile a single document manually:
 
 ```bash
 cd template/proposal   # or template/skripsi
-pdflatex main.tex && bibtex main && pdflatex main.tex && pdflatex main.tex
+pdflatex main.tex && bibtex main && \
+  makeindex main.nlo -s nomencl.ist -o main.nls && \
+  pdflatex main.tex && pdflatex main.tex
 ```
 
-For the list of symbols and abbreviations, uncomment `\lambang`, add `\nomenclature` entries, and run:
-
-```bash
-make glossary-proposal   # or make glossary-skripsi
-```
+For the list of symbols and abbreviations, uncomment `\lambang` and add `\nomenclature` entries. `make proposal` or `make skripsi` runs `makeindex` automatically. Use `make glossary-proposal` or `make glossary-skripsi` only to regenerate the index without rebuilding the document.
 
 ---
 
@@ -222,5 +220,6 @@ make glossary-proposal   # or make glossary-skripsi
 - Replace `figures/logougm.pdf` with the official UGM logo.
 - For the proposal, present the proposed research design and expected outcomes, not completed results.
 - For the thesis, keep every chapter structured and aligned with the pedoman.
+- The class renders the UGM logo at the pedoman's 5.5 cm diameter.
 - Use `\bibliography{references}` for the bibliography.
 - Make sure every `\citep` and `\citet` key exists in `references.bib`.

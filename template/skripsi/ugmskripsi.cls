@@ -2,7 +2,7 @@
 %Created by Pekik Nurwantoro, Universitas Gadjah Mada, Yogyakarta, Indonesia
 \ProvidesClass{ugmskripsi}[2010/01/16 v2.0 The University of Gadjah Mada Skripsi Class]
 
-\RequirePackage[english,bahasa]{babel}
+\RequirePackage[english,indonesian]{babel}
 \RequirePackage{indentfirst}
 \RequirePackage{setspace}
 \RequirePackage[T1]{fontenc}
@@ -35,7 +35,7 @@
 \bibliographystyle{plainnat}
 \RequirePackage{nomencl}%
 \renewcommand{\nomname}{\nomenclaturename}%
-\makeglossary%
+\makenomenclature%
 
 %------------------------------------------------------------
 %Layout
@@ -137,7 +137,7 @@
 %------------------------------------------------------------
 %Redefine caption names
 %------------------------------------------------------------
-\def\captionsbahasa{%
+\def\captionsindonesian{%
 \def\prefacename{PRAKATA}%
 \def\contentsname{DAFTAR ISI}%
 \def\listfigurename{DAFTAR GAMBAR}%
@@ -155,6 +155,7 @@
 \def\tablename{Tabel}%
 \def\pagename{Halaman}%
 }
+\let\captionsbahasa\captionsindonesian
 
 %English
 \def\captionsenglish{%
@@ -235,7 +236,7 @@
       \vspace{1.0cm}
       \MakeUppercase{\normalfont\slshape\bfseries\@titleeng}\par\nobreak
        \vfill
-       \includegraphics{logougm}
+       \includegraphics[width=5.5cm]{logougm}
        \vfill
        {\normalfont
         \MakeUppercase{\@fullname}\\
@@ -279,7 +280,7 @@
         {\normalfont Usulan Penelitian}\\
        \fi
        \vfill
-       \includegraphics{logougm}
+       \includegraphics[width=5.5cm]{logougm}
        \vfill
        {\normalfont
         \MakeUppercase{\@fullname}\\
@@ -330,20 +331,20 @@ Susunan Tim Penguji\\
 % The single-supervisor branch preserves the original spacing.
 \ifx\@secondsupervisor\@empty
 \vspace{4.0cm}
-\begin{tabular}{p{7cm}p{7cm}}
+\begin{tabular}{p{6.5cm}p{6.5cm}}
 \@firstsupervisor&\@firstexaminer\\
 Pembimbing & Ketua Penguji
 \end{tabular}
 
 \bigskip
 \vspace{3.0cm}
-\begin{tabular}{p{7cm}p{7cm}}
+\begin{tabular}{p{6.5cm}p{6.5cm}}
 &\@secondexaminer\\
 &Anggota Penguji
 \end{tabular}
 \else
 \vspace{3.0cm}
-\begin{tabular}{p{7cm}p{7cm}}
+\begin{tabular}{p{6.5cm}p{6.5cm}}
 \@firstsupervisor&\@firstexaminer\\
 Pembimbing I & Ketua Penguji\\[2.5cm]
 \@secondsupervisor&\@secondexaminer\\
@@ -374,7 +375,7 @@ ditulis atau diterbitkan oleh orang lain, kecuali yang secara tertulis diacu
 dalam naskah ini dan disebutkan dalam daftar pustaka.
  
 \vspace{1.5cm}
-\begin{tabular}{p{7.5cm}c}
+\noindent\begin{tabular}{p{6.5cm}p{6cm}}
 &\@city,\space\@examdate\\
 &\\
 &\\
@@ -416,8 +417,9 @@ dalam naskah ini dan disebutkan dalam daftar pustaka.
 %------------------------------------------------------------
 \def\lambang{%
   \clearpage\thispagestyle{chapterheading}%
-  \printglossary%
-\addcontentsline{toc}{chapter}{\nomenclaturename}
+  \phantomsection
+  \addcontentsline{toc}{chapter}{\nomenclaturename}%
+  \printnomenclature%
 }
 
 %------------------------------------------------------------
@@ -425,6 +427,7 @@ dalam naskah ini dan disebutkan dalam daftar pustaka.
 %------------------------------------------------------------
 \def\abstractind{%
   \clearpage
+  \selectlanguage{indonesian}
   \phantomsection
   \addcontentsline{toc}{chapter}{\abstractname}
   \thispagestyle{chapterheading}%
@@ -446,7 +449,8 @@ dalam naskah ini dan disebutkan dalam daftar pustaka.
   \begin{singlespace}%
   \vskip 20\p@
 }
-\def\endabstractind{\par\vfil\null\end{singlespace}}
+\def\endabstractind{\par\vfil\null\end{singlespace}%
+\if@langindo\selectlanguage{indonesian}\else\selectlanguage{english}\fi}
 
 %------------------------------------------------------------
 %Redefine Abstract in English
@@ -476,7 +480,8 @@ dalam naskah ini dan disebutkan dalam daftar pustaka.
   \vskip 20\p@
   }
 \def\endabstracteng{\par\vfil\null\end{singlespace}%
-\selectlanguage{bahasa}\clearpage\pagenumbering{arabic}\setcounter{page}{1}}
+\if@langindo\selectlanguage{indonesian}\else\selectlanguage{english}\fi
+\clearpage\pagenumbering{arabic}\setcounter{page}{1}}
 
 
 \AtBeginDocument{%
@@ -492,7 +497,7 @@ dalam naskah ini dan disebutkan dalam daftar pustaka.
 
 \AtBeginDocument{%
 \if@langindo%
-\selectlanguage{bahasa}%
+\selectlanguage{indonesian}%
 \else
 \selectlanguage{english}%
 \fi

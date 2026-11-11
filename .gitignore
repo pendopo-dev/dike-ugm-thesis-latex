@@ -11,6 +11,9 @@
 **/*.bbl
 **/*.blg
 **/*.glo
+**/*.gls
+**/*.nlo
+**/*.nls
 **/*.idx
 **/*.ind
 **/*.ilg
@@ -36,3 +39,7 @@ Thumbs.db
 # Secrets
 .env
 secrets/
+
+# Python test cache
+__pycache__/
+*.pyc

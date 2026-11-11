@@ -60,10 +60,11 @@ Include the template version, operating system, TeX distribution, the exact comm
    make all-docker
    ```
 
-4. Validate the class copies:
+4. Validate the class copies and build behavior:
 
    ```bash
    make check
+   make test
    ```
 
 ## Making changes
@@ -139,7 +140,7 @@ Do not commit generated files such as `main.pdf`, `.aux`, `.log`, `.toc`, `.bbl`
 
 1. Create a branch from `main`.
 2. Make the smallest change that solves the problem.
-3. Build both templates and run `make check`.
+3. Build both templates, run `make check`, and run `make test`.
 4. Update the documentation if needed.
 5. Open a pull request and complete the template checklist.
 6. Wait for the GitHub Actions checks to pass.
@@ -152,7 +153,7 @@ A maintainer will review the pull request. Do not merge your own pull request un
 A pull request is ready when:
 
 - Both `make proposal` and `make skripsi` succeed.
-- `make check` passes.
+- `make check` and `make test` pass.
 - The GitHub Actions workflow is green.
 - The change follows the pedoman or fixes a verified defect.
 - Documentation is updated.
