@@ -16,11 +16,11 @@ Fixes #
 ## Checklist
 - [ ] I read [CONTRIBUTING.md](https://github.com/pendopo-dev/dike-ugm-thesis-latex/blob/main/CONTRIBUTING.md).
 - [ ] I followed the [Code of Conduct](https://github.com/pendopo-dev/dike-ugm-thesis-latex/blob/main/CODE_OF_CONDUCT.md).
-- [ ] Both templates compile: `make proposal` and `make skripsi` (or the Docker equivalents).
+- [ ] All templates compile: `make proposal` and `make skripsi` (or the Docker equivalents).
 - [ ] `make check` passes.
 - [ ] I updated the documentation where behavior changed.
 - [ ] I did not commit generated build artifacts.
-- [ ] If I changed `ugmskripsi.cls`, I updated all three copies and ran `make check`.
+- [ ] If I changed `ugmskripsi.cls`, I updated all class-file copies and ran `make check`.
 - [ ] My commits follow the Conventional Commits format.
 
 ## Testing

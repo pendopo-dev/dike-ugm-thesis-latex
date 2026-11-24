@@ -69,7 +69,8 @@ copy_repo() {
         --exclude='*.bbl' \
         --exclude='*.blg' \
         --exclude='template/proposal/main.pdf' \
-        --exclude='template/skripsi/main.pdf' \
+        --exclude='template/skripsi/inovasi-produk/main.pdf' \
+        --exclude='template/skripsi/ilmiah-akademik/main.pdf' \
         -cf - .) | (cd "$destination" && tar -xf -); then
         fail "could not copy the repository to $destination"
         return 1
@@ -79,9 +80,10 @@ copy_repo() {
 build() {
     local repo=$1
     local target=$2
-    local log=$3
-    if [[ -e "$repo/template/$target/main.aux" || -e "$repo/template/$target/main.pdf" ]]; then
-        fail "build for $target did not start from a clean directory"
+    local dir=$3
+    local log=$4
+    if [[ -e "$repo/$dir/main.aux" || -e "$repo/$dir/main.pdf" ]]; then
+        fail "build for $dir did not start from a clean directory"
         return 1
     fi
     if ! (cd "$repo" && make "$target") >"$log" 2>&1; then
@@ -89,8 +91,8 @@ build() {
         tail -n 30 "$log" | sed 's/^/    /' >&2
         return 1
     fi
-    if [[ ! -f "$repo/template/$target/main.pdf" ]]; then
-        fail "template/$target/main.pdf was not created"
+    if [[ ! -f "$repo/$dir/main.pdf" ]]; then
+        fail "$dir/main.pdf was not created"
         return 1
     fi
 }
@@ -245,14 +247,26 @@ test_default_builds() {
     local repo
     repo=$(mktemp -d "$WORK/default.XXXXXX") || return 1
     copy_repo "$repo" || return 1
-    build "$repo" proposal "$repo/proposal.log" || return 1
+    build "$repo" proposal template/proposal "$repo/proposal.log" || return 1
     check_log "$repo/proposal.log" || return 1
-    inject_figure "$repo/template/skripsi/chapters/bab1-pendahuluan.tex" || return 1
-    build "$repo" skripsi "$repo/skripsi.log" || return 1
+    inject_figure "$repo/template/skripsi/inovasi-produk/chapters/bab1-pendahuluan.tex" || return 1
+    build "$repo" skripsi-inovasi-produk template/skripsi/inovasi-produk "$repo/skripsi.log" || return 1
     check_log "$repo/skripsi.log" || return 1
-    DEFAULT_PDF="$repo/template/skripsi/main.pdf"
+    DEFAULT_PDF="$repo/template/skripsi/inovasi-produk/main.pdf"
     python3 "$ROOT/tests/check_pdf.py" toc-lists "$DEFAULT_PDF" || return 1
     python3 "$ROOT/tests/check_pdf.py" language-id "$DEFAULT_PDF"
+}
+
+test_ilmiah_akademik_build() {
+    local repo
+    repo=$(mktemp -d "$WORK/ilmiah-akademik.XXXXXX") || return 1
+    copy_repo "$repo" || return 1
+    inject_figure "$repo/template/skripsi/ilmiah-akademik/chapters/bab1-pendahuluan.tex" || return 1
+    build "$repo" skripsi-ilmiah-akademik template/skripsi/ilmiah-akademik \
+        "$repo/ilmiah-akademik.log" || return 1
+    check_log "$repo/ilmiah-akademik.log" || return 1
+    python3 "$ROOT/tests/check_pdf.py" toc-lists \
+        "$repo/template/skripsi/ilmiah-akademik/main.pdf"
 }
 
 test_logo_size() {
@@ -267,10 +281,10 @@ test_thesis_nomenclature() {
     local repo
     repo=$(mktemp -d "$WORK/nomenclature.XXXXXX") || return 1
     copy_repo "$repo" || return 1
-    inject_thesis_nomenclature "$repo/template/skripsi/main.tex" || return 1
-    build "$repo" skripsi "$repo/skripsi.log" || return 1
+    inject_thesis_nomenclature "$repo/template/skripsi/inovasi-produk/main.tex" || return 1
+    build "$repo" skripsi-inovasi-produk template/skripsi/inovasi-produk "$repo/skripsi.log" || return 1
     check_log "$repo/skripsi.log" || return 1
-    python3 "$ROOT/tests/check_pdf.py" nomenclature "$repo/template/skripsi/main.pdf"
+    python3 "$ROOT/tests/check_pdf.py" nomenclature "$repo/template/skripsi/inovasi-produk/main.pdf"
 }
 
 test_proposal_nomenclature() {
@@ -278,7 +292,7 @@ test_proposal_nomenclature() {
     repo=$(mktemp -d "$WORK/proposal-nomenclature.XXXXXX") || return 1
     copy_repo "$repo" || return 1
     inject_proposal_nomenclature "$repo/template/proposal/main.tex" || return 1
-    build "$repo" proposal "$repo/proposal.log" || return 1
+    build "$repo" proposal template/proposal "$repo/proposal.log" || return 1
     check_log "$repo/proposal.log" || return 1
     python3 "$ROOT/tests/check_pdf.py" nomenclature "$repo/template/proposal/main.pdf"
 }
@@ -287,25 +301,26 @@ test_long_metadata_and_two_supervisors() {
     local repo
     repo=$(mktemp -d "$WORK/long.XXXXXX") || return 1
     copy_repo "$repo" || return 1
-    inject_long_metadata "$repo/template/skripsi/main.tex" || return 1
-    build "$repo" skripsi "$repo/skripsi.log" || return 1
+    inject_long_metadata "$repo/template/skripsi/inovasi-produk/main.tex" || return 1
+    build "$repo" skripsi-inovasi-produk template/skripsi/inovasi-produk "$repo/skripsi.log" || return 1
     check_log "$repo/skripsi.log" || return 1
-    python3 "$ROOT/tests/check_pdf.py" metadata "$repo/template/skripsi/main.pdf"
+    python3 "$ROOT/tests/check_pdf.py" metadata "$repo/template/skripsi/inovasi-produk/main.pdf"
 }
 
 test_english_option() {
     local repo
     repo=$(mktemp -d "$WORK/english.XXXXXX") || return 1
     copy_repo "$repo" || return 1
-    inject_figure "$repo/template/skripsi/chapters/bab1-pendahuluan.tex" || return 1
-    inject_english_option "$repo/template/skripsi/main.tex" || return 1
-    build "$repo" skripsi "$repo/skripsi.log" || return 1
+    inject_figure "$repo/template/skripsi/inovasi-produk/chapters/bab1-pendahuluan.tex" || return 1
+    inject_english_option "$repo/template/skripsi/inovasi-produk/main.tex" || return 1
+    build "$repo" skripsi-inovasi-produk template/skripsi/inovasi-produk "$repo/skripsi.log" || return 1
     check_log "$repo/skripsi.log" || return 1
-    python3 "$ROOT/tests/check_pdf.py" language-en "$repo/template/skripsi/main.pdf"
+    python3 "$ROOT/tests/check_pdf.py" language-en "$repo/template/skripsi/inovasi-produk/main.pdf"
 }
 
 run_test "class file copies match" test_class_copies
 run_test "default proposal and thesis builds" test_default_builds
+run_test "ilmiah-akademik thesis builds" test_ilmiah_akademik_build
 run_test "logo size" test_logo_size
 run_test "thesis with nonempty nomenclature" test_thesis_nomenclature
 run_test "proposal with nonempty nomenclature" test_proposal_nomenclature

@@ -19,13 +19,18 @@ From the repository root:
 ```bash
 make proposal
 make skripsi
+make skripsi-inovasi-produk
+make skripsi-ilmiah-akademik
 make all
 ```
 
 The generated files are:
 
 - `template/proposal/main.pdf`
-- `template/skripsi/main.pdf`
+- `template/skripsi/inovasi-produk/main.pdf`
+- `template/skripsi/ilmiah-akademik/main.pdf`
+
+`make skripsi` builds both thesis tracks; `make all` builds the proposal and both thesis tracks.
 
 The Makefile runs `pdflatex`, `bibtex`, `makeindex`, and two additional `pdflatex` passes so that citations, the nomenclature index, and cross-references resolve.
 
@@ -50,10 +55,12 @@ Docker avoids installing TeX Live locally. Start Docker Desktop, then run:
 ```bash
 make proposal-docker
 make skripsi-docker
+make skripsi-inovasi-produk-docker
+make skripsi-ilmiah-akademik-docker
 make all-docker
 ```
 
-The Docker targets build the image from `docker/Dockerfile` and mount `template/` into the container. The generated PDFs appear in the same directories as the local build.
+The Docker targets build the image from `docker/Dockerfile` and mount `template/` into the container. The generated PDFs appear in the same directories as the local build. `make skripsi-docker` builds both thesis tracks; the per-track targets build one thesis each.
 
 Open an interactive shell in the container:
 
@@ -64,7 +71,7 @@ make shell
 ## Overleaf
 
 1. Create a new Overleaf project.
-2. Upload the contents of `template/proposal/` or `template/skripsi/`.
+2. Upload the contents of `template/proposal/`, `template/skripsi/inovasi-produk/`, or `template/skripsi/ilmiah-akademik/`.
 3. Set `main.tex` as the main document.
 4. Select **pdfLaTeX** as the compiler and **BibTeX** as the bibliography tool.
 5. Compile.
@@ -85,7 +92,7 @@ VimTeX uses `latexmk` by default. The template also works with the Makefile if y
 
 ## List of symbols and abbreviations
 
-The `\lambang` command is disabled by default in `template/skripsi/main.tex`. To enable it:
+The `\lambang` command is disabled by default in the thesis `main.tex` files (`template/skripsi/inovasi-produk/main.tex` and `template/skripsi/ilmiah-akademik/main.tex`). To enable it:
 
 1. Add entries to the document:
 
@@ -94,18 +101,22 @@ The `\lambang` command is disabled by default in `template/skripsi/main.tex`. To
    \nomenclature{CI}{Continuous Integration}
    ```
 
-2. Uncomment `\lambang` in `template/skripsi/main.tex`.
+2. Uncomment `\lambang` in the relevant thesis `main.tex`.
 3. Rebuild the document:
 
    ```bash
-   make skripsi
+   make skripsi-inovasi-produk
    ```
+
+   Use `make skripsi-ilmiah-akademik` for the other track, or `make skripsi` for both.
 
 The build runs `makeindex` automatically. If you prefer to regenerate only the nomenclature index, run:
 
 ```bash
-make glossary-skripsi
+make glossary-skripsi-inovasi-produk
 ```
+
+Use `make glossary-skripsi-ilmiah-akademik` for the other track, or `make glossary-skripsi` for both.
 
 The proposal template does not enable `\lambang` by default. If your department requires a list of symbols there, add `\lambang` to `template/proposal/main.tex`, add the entries, and run:
 
@@ -125,7 +136,7 @@ This removes auxiliary files created by `pdflatex`, `bibtex`, and `makeindex`. I
 
 ## Validation
 
-Check that the three class-file copies are identical:
+Check that all class-file copies are identical:
 
 ```bash
 make check
@@ -143,18 +154,18 @@ The test suite requires `python3` and `pdftotext` from Poppler. The logo-size as
 
 | Symptom | Cause | Fix |
 |---|---|---|
-| `logougm` not found | The logo file is missing or renamed | Replace `template/*/figures/logougm.pdf` with the official UGM logo |
+| `logougm` not found | The logo file is missing or renamed | Replace `figures/logougm.pdf` in the relevant template directory with the official UGM logo |
 | Citations show `[?]` | BibTeX has not run, or the citation key is missing | Run `make clean && make proposal`; check `references.bib` |
 | `natbib.sty` not found | Incomplete TeX Live installation | Install the full TeX Live distribution |
 | PDF does not change after an edit | Stale auxiliary files | Run `make clean`, then rebuild |
 | Docker target fails | Docker Desktop is not running | Start Docker Desktop and confirm `docker info` succeeds |
-| Daftar Lambang is empty | `\lambang` is disabled or the `makeindex` step did not run | Enable `\lambang`, confirm that `main.nlo` contains entries, and run `make skripsi` |
+| Daftar Lambang is empty | `\lambang` is disabled or the `makeindex` step did not run | Enable `\lambang`, confirm that `main.nlo` contains entries, and rebuild the relevant thesis |
 | Overfull hbox warnings | A line, table, or figure is wider than the text block | Adjust the content; warnings do not stop the build |
 
 ## Notes
 
 - The template uses `pdflatex`, not XeLaTeX or LuaLaTeX. If you switch engines, check `inputenc`, `fontenc`, and the `times` package first.
-- The class file is shared by both templates. Edit the canonical `ugmskripsi.cls` at the repository root, copy it to both template directories, and run `make check`.
+- The class file is shared by the proposal and both thesis tracks. Edit the canonical `ugmskripsi.cls` at the repository root, copy it to `template/proposal/`, `template/skripsi/inovasi-produk/`, and `template/skripsi/ilmiah-akademik/`, and run `make check`.
 - The class renders the UGM logo at the pedoman's 5.5 cm diameter.
 - The Dockerfile uses `texlive/texlive:latest`. Pin a specific TeX Live image tag if you need a fully reproducible build.
 - The `examples/` directory contains official reference documents. Do not edit those PDFs.

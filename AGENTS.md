@@ -2,7 +2,7 @@
 
 > **Official guideline:** `@examples/pedoman_ta.pdf`
 > **Proposal example:** `@examples/contoh_proposal.pdf`
-> **Thesis example:** `@examples/contoh_skripsi.pdf`
+> **Thesis example:** `@examples/contoh_skripsi_inovasi_produk.pdf`
 
 This file is for AI coding agents and maintainers. It describes the document structure and formatting rules used by this template.
 
@@ -69,6 +69,11 @@ Students develop a technology-based product, application, or prototype. Other de
 
 ## Thesis structure (`template/skripsi/`)
 
+Two thesis tracks are provided:
+
+- `template/skripsi/inovasi-produk/` — Skripsi Inovasi Produk (Pedoman Chapter 3)
+- `template/skripsi/ilmiah-akademik/` — Skripsi Ilmiah Akademik (Pedoman Chapter 2)
+
 > Class: `\documentclass[skripsi,indonesia]{ugmskripsi}`
 
 ### Front matter
@@ -88,7 +93,7 @@ Students develop a technology-based product, application, or prototype. Other de
 | Intisari | Yes | Indonesian |
 | Abstract | Yes | English |
 
-### Main chapters (Inovasi Produk — Pedoman Chapter 3.2)
+### Main chapters — Skripsi Inovasi Produk (`template/skripsi/inovasi-produk/`, Pedoman Chapter 3.2)
 
 | Chapter | Title | Contents |
 |---|---|---|
@@ -99,6 +104,17 @@ Students develop a technology-based product, application, or prototype. Other de
 | **Chapter 5** | Proses Pembuatan Produk | Implementation, code, component integration |
 | **Chapter 6** | Pengujian dan Evaluasi Produk | Test methods, scenarios, results, performance evaluation, **conclusions and recommendations** |
 
+### Main chapters — Skripsi Ilmiah Akademik (`template/skripsi/ilmiah-akademik/`, Pedoman Chapter 2.3.2)
+
+| Chapter | Title | Contents |
+|---|---|---|
+| **Chapter 1** | Pendahuluan | Background, **problem formulation**, research scope and limitations, objectives, benefits |
+| **Chapter 2** | Tinjauan Pustaka | Systematic literature review, state of the art, and research position |
+| **Chapter 3** | Metodologi Penelitian | General overview and flowchart, data, method/model design, testing and analysis design |
+| **Chapter 4** | Implementasi | Implementation steps, code, module integration, tools, implementation testing, debugging |
+| **Chapter 5** | Hasil dan Pembahasan | Experiment design, results, discussion, and comparison with prior work |
+| **Chapter 6** | Simpulan dan Saran | Conclusions answering the objectives, limitations, and future work |
+
 ### Back matter
 
 | Element | Included? |
@@ -108,20 +124,20 @@ Students develop a technology-based product, application, or prototype. Other de
 
 ---
 
-## Key differences: proposal vs thesis
+## Key differences: proposal vs thesis tracks
 
-| Aspect | Proposal | Thesis |
-|---|---|---|
-| Class option | `[proposal]` | `[skripsi]` |
-| Cover text | "PROPOSAL TUGAS AKHIR" | "SKRIPSI" |
-| Chapter 1 title | Problem statement | Product definition |
-| Chapter 2 | Related work | Problem identification and innovative idea |
-| Chapter 3 | Method and research design | Scientific foundation |
-| Chapter 4 | Research schedule | Product design |
-| Chapter 5 | Not included | Product development |
-| Chapter 6 | Not included | Product testing and evaluation |
-| Front matter | Minimal | Complete |
-| Appendices | Not included | Included |
+| Aspect | Proposal | Skripsi Ilmiah Akademik | Skripsi Inovasi Produk |
+|---|---|---|---|
+| Class option | `[proposal]` | `[skripsi]` | `[skripsi]` |
+| Cover text | "PROPOSAL TUGAS AKHIR" | "SKRIPSI" | "SKRIPSI" |
+| Chapter 1 title | Problem statement | Problem formulation | Product definition |
+| Chapter 2 | Related work | Tinjauan Pustaka | Identifikasi Masalah dan Ide Inovatif |
+| Chapter 3 | Method and research design | Metodologi Penelitian | Kajian Ilmiah |
+| Chapter 4 | Research schedule | Implementasi | Perancangan Prototipe/Produk |
+| Chapter 5 | Not included | Hasil dan Pembahasan | Proses Pembuatan Produk |
+| Chapter 6 | Not included | Simpulan dan Saran | Pengujian dan Evaluasi Produk |
+| Front matter | Minimal | Complete | Complete |
+| Appendices | Not included | Included | Included |
 
 ---
 
@@ -198,19 +214,22 @@ From the repository root:
 
 ```bash
 make proposal
-make skripsi
+make skripsi-inovasi-produk
+make skripsi-ilmiah-akademik
+# or: make skripsi   (builds both thesis tracks)
 ```
 
 Or compile a single document manually:
 
 ```bash
-cd template/proposal   # or template/skripsi
+cd template/proposal   # or template/skripsi/inovasi-produk
+                       # or template/skripsi/ilmiah-akademik
 pdflatex main.tex && bibtex main && \
   makeindex main.nlo -s nomencl.ist -o main.nls && \
   pdflatex main.tex && pdflatex main.tex
 ```
 
-For the list of symbols and abbreviations, uncomment `\lambang` and add `\nomenclature` entries. `make proposal` or `make skripsi` runs `makeindex` automatically. Use `make glossary-proposal` or `make glossary-skripsi` only to regenerate the index without rebuilding the document.
+For the list of symbols and abbreviations, uncomment `\lambang` and add `\nomenclature` entries. The build targets run `makeindex` automatically. Use `make glossary-proposal`, `make glossary-skripsi-inovasi-produk`, or `make glossary-skripsi-ilmiah-akademik` only to regenerate the index without rebuilding the document (`make glossary-skripsi` regenerates both thesis indexes).
 
 ---
 
