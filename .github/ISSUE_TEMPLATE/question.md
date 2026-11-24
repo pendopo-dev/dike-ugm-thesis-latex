@@ -10,7 +10,7 @@ assignees: ''
 <!-- Describe the result you want. -->
 
 ## Template and version
-- Template: [proposal / skripsi]
+- Template: [proposal / skripsi-inovasi-produk / skripsi-ilmiah-akademik]
 - Version: [e.g. v2026.1]
 
 ## Environment

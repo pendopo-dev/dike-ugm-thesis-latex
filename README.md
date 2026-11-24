@@ -11,7 +11,8 @@ The template is organized around the DIKE/UGM pedoman for document structure, pa
 ## Scope
 
 - `template/proposal/` follows the DIKE proposal structure: Pendahuluan, Penelitian Terkait, Metode dan Rancangan Penelitian, and Jadwal Penelitian.
-- `template/skripsi/` follows the **Inovasi Produk** thesis track: six chapters from Pendahuluan through Pengujian dan Evaluasi Produk.
+- `template/skripsi/inovasi-produk/` follows the **Skripsi Inovasi Produk** track: six chapters from Pendahuluan through Pengujian dan Evaluasi Produk.
+- `template/skripsi/ilmiah-akademik/` follows the **Skripsi Ilmiah Akademik** track: six chapters from Pendahuluan through Simpulan dan Saran.
 - Other departments and thesis tracks have different requirements. Check your department's pedoman before using this template.
 
 ## Quick start
@@ -26,7 +27,7 @@ The template is organized around the DIKE/UGM pedoman for document structure, pa
    cd YOUR_REPOSITORY
    ```
 
-3. Replace the metadata in `template/proposal/main.tex` and `template/skripsi/main.tex`:
+3. Replace the metadata in `template/proposal/main.tex` and the `main.tex` of your chosen thesis track (`template/skripsi/inovasi-produk/main.tex` or `template/skripsi/ilmiah-akademik/main.tex`):
 
    ```latex
    \titleind{Judul Penelitian dalam Bahasa Indonesia}
@@ -45,9 +46,9 @@ The template is organized around the DIKE/UGM pedoman for document structure, pa
 
    If you have a second supervisor, uncomment `\secondsupervisor{...}` in the same file.
 
-4. Write your content in `template/proposal/chapters/` or `template/skripsi/chapters/`.
-5. Replace `template/*/figures/logougm.pdf` with the official UGM logo from your department.
-6. Compile with `make proposal` or `make skripsi`.
+4. Write your content in `template/proposal/chapters/` or `template/skripsi/inovasi-produk/chapters/` (or `template/skripsi/ilmiah-akademik/chapters/`).
+5. Replace `figures/logougm.pdf` in `template/proposal/`, `template/skripsi/inovasi-produk/`, or `template/skripsi/ilmiah-akademik/` with the official UGM logo from your department.
+6. Compile with `make proposal` and the target for your chosen thesis track (`make skripsi-inovasi-produk` or `make skripsi-ilmiah-akademik`); `make skripsi` builds both tracks.
 
 ### Fork for contributions
 
@@ -65,12 +66,14 @@ Fork the repository only when you want to improve the template itself. Read [CON
 ### Local TeX Live
 
 ```bash
-make proposal          # Build template/proposal/main.pdf
-make skripsi           # Build template/skripsi/main.pdf
-make all               # Build both documents
-make check             # Verify that the three class-file copies match
-make test              # Build the templates and run the regression tests
-make clean             # Remove LaTeX build artifacts
+make proposal                 # Build template/proposal/main.pdf
+make skripsi                  # Build both thesis tracks
+make skripsi-inovasi-produk   # Build template/skripsi/inovasi-produk/main.pdf
+make skripsi-ilmiah-akademik  # Build template/skripsi/ilmiah-akademik/main.pdf
+make all                      # Build the proposal and both thesis tracks
+make check                    # Verify that the class-file copies match
+make test                     # Build the templates and run the regression tests
+make clean                    # Remove LaTeX build artifacts
 ```
 
 Generated `main.pdf` files are ignored by Git. Rebuild them with `make` whenever you need a local copy.
@@ -78,15 +81,17 @@ Generated `main.pdf` files are ignored by Git. Rebuild them with `make` whenever
 ### Docker
 
 ```bash
-make proposal-docker   # Build the proposal inside the container
-make skripsi-docker    # Build the thesis inside the container
-make all-docker        # Build both documents
-make shell             # Open a shell in the build container
+make proposal-docker                 # Build the proposal inside the container
+make skripsi-docker                  # Build both thesis tracks inside the container
+make skripsi-inovasi-produk-docker   # Build the inovasi-produk thesis inside the container
+make skripsi-ilmiah-akademik-docker  # Build the ilmiah-akademik thesis inside the container
+make all-docker                      # Build the proposal and both thesis tracks
+make shell                           # Open a shell in the build container
 ```
 
 ### Overleaf
 
-1. Create a new Overleaf project and upload the contents of `template/proposal/` or `template/skripsi/`.
+1. Create a new Overleaf project and upload the contents of `template/proposal/`, `template/skripsi/inovasi-produk/`, or `template/skripsi/ilmiah-akademik/`.
 2. Set `main.tex` as the main document.
 3. Select **pdfLaTeX** as the compiler and **BibTeX** as the bibliography tool.
 4. Compile.
@@ -106,7 +111,8 @@ See [docs/build.md](docs/build.md) for the full build matrix and troubleshooting
 | Path | Purpose |
 |---|---|
 | `template/proposal/` | Proposal document, chapters, bibliography, and figures |
-| `template/skripsi/` | Thesis document, chapters, appendix, bibliography, and figures |
+| `template/skripsi/inovasi-produk/` | Inovasi Produk thesis document, chapters, appendix, bibliography, and figures |
+| `template/skripsi/ilmiah-akademik/` | Ilmiah Akademik thesis document, chapters, appendix, bibliography, and figures |
 | `ugmskripsi.cls` | Canonical class file; the copies in each template must match it |
 | `examples/` | Official pedoman and example documents from DIKE/UGM |
 | `docker/Dockerfile` | Reproducible TeX Live build environment |
@@ -130,7 +136,7 @@ See [docs/build.md](docs/build.md) for the full build matrix and troubleshooting
 
 | Problem | Solution |
 |---|---|
-| `logougm` not found | Replace `template/*/figures/logougm.pdf` with the official UGM logo. |
+| `logougm` not found | Replace `figures/logougm.pdf` in the relevant template directory with the official UGM logo. |
 | References show `[?]` | Run `make clean && make proposal` (or `make skripsi`) so BibTeX runs again. Check that every citation key exists in `references.bib`. |
 | `natbib` or `babel` package missing | Install the full TeX Live distribution, not a minimal scheme. |
 | The PDF does not update | Run `make clean`, then rebuild. |

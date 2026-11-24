@@ -15,7 +15,7 @@ The latest tag is listed on the [tags page](https://github.com/pendopo-dev/dike-
 
 ## Before tagging
 
-1. Confirm that both templates build from a clean tree:
+1. Confirm that all templates build from a clean tree:
 
    ```bash
    make clean
@@ -46,13 +46,13 @@ The latest tag is listed on the [tags page](https://github.com/pendopo-dev/dike-
    git push origin v2026.2
    ```
 
-3. The `Compile LaTeX` workflow runs on the tag. It compiles the proposal and the thesis, then attaches both PDFs to a GitHub release.
+3. The `Compile LaTeX` workflow runs on the tag. It compiles the proposal and both thesis tracks, then attaches the three PDFs to a GitHub release.
 
 ## Verify the release
 
 1. Open the **Actions** tab and confirm that the tag run completed.
-2. Open the **Releases** page and confirm that `proposal.pdf` and `thesis.pdf` are attached.
-3. Download both PDFs and confirm that they open.
+2. Open the **Releases** page and confirm that `proposal.pdf`, `skripsi-inovasi-produk.pdf`, and `skripsi-ilmiah-akademik.pdf` are attached.
+3. Download all PDFs and confirm that they open.
 4. Confirm that the release notes describe the user-visible changes.
 
 ## Roll back a release
@@ -74,4 +74,4 @@ If a release is incorrect:
 - Do not move or reuse a published tag. Create a new revision instead.
 - Keep the tag as the single version source; the README badge and links derive from it.
 - The CI workflow grants write permission only to the release job; the compile jobs run with read-only access.
-- The release job waits for the class-file check and both PDF jobs, so a drifted class file blocks the release.
+- The release job waits for the class-file check and the PDF jobs, so a drifted class file blocks the release.

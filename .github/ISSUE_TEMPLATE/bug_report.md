@@ -10,7 +10,7 @@ assignees: ''
 <!-- A clear and concise description of the bug. -->
 
 ## Steps to reproduce
-1. Build with: [e.g. `make proposal`, `make skripsi`, `make proposal-docker`]
+1. Build with: [e.g. `make proposal`, `make skripsi`, `make skripsi-ilmiah-akademik`, `make proposal-docker`]
 2. Open: [e.g. the title page, table of contents, chapter 3]
 3. See: [the incorrect output]
 

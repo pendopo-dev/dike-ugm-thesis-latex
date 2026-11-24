@@ -56,11 +56,13 @@ jobs:
       - name: Compile thesis with Docker
         run: make skripsi-docker
 
-      - name: Upload thesis PDF
+      - name: Upload thesis PDFs
         uses: actions/upload-artifact@v7
         with:
           name: skripsi-pdf
-          path: template/skripsi/main.pdf
+          path: |
+            template/skripsi/inovasi-produk/main.pdf
+            template/skripsi/ilmiah-akademik/main.pdf
           retention-days: 90
 
   release:
@@ -79,7 +81,7 @@ jobs:
           name: proposal-pdf
           path: ./pdfs/proposal
 
-      - name: Download thesis PDF
+      - name: Download thesis PDFs
         uses: actions/download-artifact@v8
         with:
           name: skripsi-pdf
@@ -88,13 +90,15 @@ jobs:
       - name: Prepare release assets
         run: |
           mv ./pdfs/proposal/main.pdf ./pdfs/proposal/proposal.pdf
-          mv ./pdfs/skripsi/main.pdf ./pdfs/skripsi/thesis.pdf
+          mv ./pdfs/skripsi/inovasi-produk/main.pdf ./pdfs/skripsi/skripsi-inovasi-produk.pdf
+          mv ./pdfs/skripsi/ilmiah-akademik/main.pdf ./pdfs/skripsi/skripsi-ilmiah-akademik.pdf
 
       - name: Attach PDFs to release
         uses: softprops/action-gh-release@v3
         with:
           files: |
             ./pdfs/proposal/proposal.pdf
-            ./pdfs/skripsi/thesis.pdf
+            ./pdfs/skripsi/skripsi-inovasi-produk.pdf
+            ./pdfs/skripsi/skripsi-ilmiah-akademik.pdf
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
